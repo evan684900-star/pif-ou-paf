@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pif ou Paf</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --dot-color: #121212;
+            --text-color: #121212;
+            --sub-text-color: #555555;
+            --yt-color: #ff0000;
+            --bubble-bg: #121212;
+            --bubble-text: #ffffff;
+            --menu-bg: #ffffff;
+            --menu-border: #121212;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --dot-color: #ffffff;
+            --text-color: #ffffff;
+            --sub-text-color: #aaaaaa;
+            --yt-color: #ff3333;
+            --bubble-bg: #ffffff;
+            --bubble-text: #121212;
+            --menu-bg: #1e1e1e;
+            --menu-border: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            color: #00adb5;
+        }
+
+        p {
+            color: var(--sub-text-color);
+            margin-bottom: 40px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .coin-container {
+            width: 150px;
+            height: 150px;
+            perspective: 1000px;
+            margin-bottom: 40px;
+        }
+
+        .coin {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 2s ease-out;
+            cursor: pointer;
+        }
+
+        .side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            backface-visibility: hidden;
+            border: 4px solid #ffd700;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .heads {
+            background: radial-gradient(circle, #ffe875 0%, #f8c216 100%);
+            color: #5c4300;
+        }
+
+        .tails {
+            background: radial-gradient(circle, #ffe875 0%, #f8c216 100%);
+            color: #5c4300;
+            transform: rotateY(180deg);
+        }
+
+        .flip-btn {
+            background-color: #00adb5;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 173, 181, 0.3);
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .flip-btn:hover {
+            background-color: #008c95;
+        }
+
+        .flip-btn:active {
+            transform: scale(0.95);
+        }
+
+        #result {
+            margin-top: 25px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            min-height: 40px;
+            color: #f8c216;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        #halo-message {
+            margin-top: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #5cdb95;
+            text-shadow: 0 0 10px rgba(92, 219, 149, 0.5);
+            min-height: 35px;
+        }
+
+        /* BOUTON VERSION (EN HAUT À GAUCHE) */
+        .version-btn {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: none;
+            border: none;
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-color);
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0.7;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .version-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* PANNEAU DU JOURNAL DES CHANGEMENTS (CHANGELOG) */
+        .changelog-panel {
+            position: fixed;
+            top: 85px;
+            left: 25px;
+            width: 320px;
+            height: 400px;
+            background-color: var(--menu-bg);
+            border: 4px solid var(--menu-border);
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            font-family: monospace;
+            transform: scale(0);
+            transform-origin: top left;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .changelog-panel.open {
+            transform: scale(1);
+        }
+
+        .changelog-header {
+            padding: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            text-align: center;
+            border-bottom: 4px solid var(--menu-border);
+            background-color: rgba(0,0,0,0.05);
+            color: #00adb5;
+        }
+
+        [data-theme="dark"] .changelog-header {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .changelog-content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .version-block {
+            margin-bottom: 20px;
+        }
+
+        .version-title {
+            font-weight: bold;
+            font-size: 13px;
+            color: #f8c216;
+            margin-bottom: 6px;
+        }
+
+        .version-list {
+            margin: 0;
+            padding-left: 15px;
+            font-size: 11px;
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        /* BOUTON MÉDAILLE (EN HAUT À DROITE) */
+        .medal-btn {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.2s;
+            padding: 0;
+        }
+
+        .medal-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .medal-btn svg {
+            width: 60px;
+            height: 60px;
+            display: block;
+        }
+
+        /* PANNEAU DES SUCCÈS (CARRÉ DROITE) */
+        .menu-panel {
+            position: fixed;
+            top: 90px;
+            right: 25px;
+            width: 320px;
+            height: 400px;
+            background-color: var(--menu-bg);
+            border: 4px solid var(--menu-border);
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            font-family: monospace;
+            transform: scale(0);
+            transform-origin: top right;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .menu-panel.open {
+            transform: scale(1);
+        }
+
+        .menu-tabs {
+            display: flex;
+            border-bottom: 4px solid var(--menu-border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--text-color);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .tab-btn.active {
+            background-color: var(--menu-border);
+            color: var(--menu-bg);
+        }
+
+        .tab-content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .success-section-title {
+            font-size: 13px;
+            margin: 15px 0 8px 0;
+            color: #00adb5;
+            text-transform: uppercase;
+            border-bottom: 1px dashed var(--sub-text-color);
+            padding-bottom: 2px;
+        }
+
+        .success-section-title:first-child {
+            margin-top: 0;
+        }
+
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.05);
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 2px solid var(--sub-text-color);
+            opacity: 0.3;
+            transition: opacity 0.3s, border-color 0.3s;
+        }
+
+        [data-theme="dark"] .achievement-item {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .achievement-item.unlocked {
+            opacity: 1;
+            border-color: #f8c216;
+            background: rgba(248, 194, 22, 0.1);
+        }
+
+        .achievement-icon {
+            font-size: 20px;
+        }
+
+        .achievement-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .achievement-title {
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .achievement-desc {
+            font-size: 10px;
+            color: var(--sub-text-color);
+        }
+
+        .stat-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            font-size: 12px;
+        }
+
+        [data-theme="dark"] .stat-line {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-line span:last-child {
+            font-weight: bold;
+            color: #00adb5;
+        }
+
+        .banner-notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #d11a2a;
+            color: #ffffff;
+            border: 4px solid #ffd700;
+            padding: 12px 30px;
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap;
+        }
+
+        .banner-notification.show {
+            top: 25px;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            z-index: 999;
+            pointer-events: none;
+            animation: fall 1.5s linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+        }
+
+        /* LEVIER MINECRAFT */
+        .lever-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .lever-base {
+            width: 56px;
+            height: 56px;
+            background-color: #737373;
+            border: 6px solid #4a4a4a;
+            box-shadow: inset -6px -6px 0px #313131, inset 6px 6px 0px #9c9c9c, 0 6px 10px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .lever-stick {
+            width: 14px;
+            height: 70px;
+            background-color: #866043;
+            border-left: 4px solid #b38965;
+            border-right: 4px solid #573d26;
+            position: absolute;
+            bottom: 28px;
+            left: 21px;
+            z-index: 2;
+            transform-origin: bottom center;
+            transform: rotate(-35deg);
+            transition: transform 0.15s steps(4);
+        }
+
+        .lever-stick::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: -4px;
+            width: 14px;
+            height: 12px;
+            background-color: #4a4a4a;
+            border: 4px solid #1a1a1a;
+        }
+
+        [data-theme="dark"] .lever-stick {
+            transform: rotate(35deg);
+        }
+
+        .lever-label {
+            margin-top: 10px;
+            font-size: 11px;
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--sub-text-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ZONE YOUTUBE */
+        .youtube-container {
+            position: fixed;
+            bottom: 35px;
+            left: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            z-index: 10;
+        }
+
+        .youtube-link {
+            display: block;
+            transition: transform 0.2s;
+        }
+
+        .youtube-link:hover {
+            transform: scale(1.1);
+        }
+
+        .youtube-link svg {
+            width: 55px;
+            height: 55px;
+            fill: var(--yt-color);
+            transition: fill 0.3s;
+        }
+
+        .promo-bubble {
+            background-color: var(--bubble-bg);
+            color: var(--bubble-text);
+            padding: 10px 14px;
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: bold;
+            border: 3px solid var(--dot-color);
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            position: relative;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: opacity 0.4s, transform 0.4s;
+            animation: bounce 1s infinite alternate;
+        }
+
+        .promo-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -11px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid var(--dot-color);
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-6px); }
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner-notification" id="bannerNotification">SUCCÈS DÉBLOQUÉ !</div>
+
+    <button class="version-btn" onclick="toggleChangelog()">v4.0.0</button>
+
+    <div class="changelog-panel" id="changelogPanel">
+        <div class="changelog-header">Journal des changements</div>
+        <div class="changelog-content">
+            <div class="version-block">
+                <div class="version-title">v4.0.0 - Système de Récompenses</div>
+                <ul class="version-list">
+                    <li>Ajout du panneau des succès et statistiques.</li>
+                    <li>Création de la médaille en Pixel Art SVG.</li>
+                    <li>Ajout d'un système de sauvegarde locale automatique.</li>
+                    <li>Ajout de la banderole rouge et or et des confettis.</li>
+                </ul>
+            </div>
+            <div class="version-block">
+                <div class="version-title">v3.0.0 - Support Médias</div>
+                <ul class="version-list">
+                    <li>Ajout de la zone promotionnelle YouTube.</li>
+                    <li>Intégration de la bulle d'aide interactive animée.</li>
+                </ul>
+            </div>
+            <div class="version-block">
+                <div class="version-title">v2.0.0 - Environnement</div>
+                <ul class="version-list">
+                    <li>Intégration du Levier Minecraft fonctionnel.</li>
+                    <li>Ajout du système d'alternance de thèmes.</li>
+                    <li>Mise en place du premier easter egg mystère.</li>
+                </ul>
+            </div>
+            <div class="version-block">
+                <div class="version-title">v1.0.0 - Lancement</div>
+                <ul class="version-list">
+                    <li>Moteur de pile ou face (Pif/Paf) de base.</li>
+                    <li>Animation 3D de rotation de la pièce de monnaie.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <button class="medal-btn" onclick="toggleMenu()" title="Succès et Statistiques">
+        <svg viewBox="0 0 26 26" shape-rendering="crispEdges">
+            <path d="M7 2h12v1H7z" fill="#581818" />
+            <path d="M6 3h3v1H6zm-1 1h3v4H5zm1 4h3v1H6zm1 1h3v1H7zm1 1h3v1H8z" fill="#b82323" />
+            <path d="M5 3h1v1H5zm-1 1h1v4H4zm1 4h1v1H5zm1 1h1v1H6zm1 1h1v1H7zm1 1h1v1H8z" fill="#cca300" />
+            <path d="M9 3h1v1H9zm-1 4h1v2H8zm1 2h1v1H9zm1 1h1v1H10z" fill="#fadc10" />
+            <path d="M17 3h3v1H17zm1 1h3v4H18zm-1 4h3v1H17zm-1 1h3v1H16zm-1 1h3v1H15z" fill="#b82323" />
+            <path d="M20 3h1v1H20zm1 1h1v4H21zm-1 4h1v1H20zm-1 1h1v1H19zm-1 1h1v1H18zm-1 1h1v1H17z" fill="#cca300" />
+            <path d="M16 3h1v1H16zm1 4h1v2H17zm-1 2h1v1H16zm-1 1h1v1H15z" fill="#fadc10" />
+            <path d="M10 4h6v1H10zm1 1h4v1H11zm1 1h2v1H12z" fill="#401010" />
+            <path d="M11 6h1v1H11zm3 0h1v1H14zm-3 1h4v1H11zm-2 1h6v1H9zm-1 1h8v1H8zm-1 1h10v1H7z" fill="#701818" />
+            <path d="M11 12h4v1h-4zm-3 1h3v1H8zm6 0h3v1h-3zm-2 1h2v1h-2zm-6 0h2v1H6zm12 0h2v1h-2zm-7 1h2v1h-2zm-6 0h1v4H5zm15 0h1v4H20zm-14 4h2v1H6zm12 0h2v1h-2zm-11 1h3v1H7zm9 0h3v1h-3zm-5 1h4v1H11z" fill="#cca300" />
+            <path d="M11 13h3v1h-3zm-3 2h10v1H8zm-2 1h14v3H6zm2 3h10v1H8zm3 1h4v1H11z" fill="#fadc10" />
+            <path d="M11 14h2v1h-2zm-3 1h3v1H8zm-1 1h4v1H7zm-1 1h4v1H6zm1 1h3v1H7zm2 1h2v1H9zm5-3h1v3h-1zm2 1h1v2h-1zm1 1h1v1h-1z" fill="#fff59d" />
+            <path d="M10 15h1v1h-1zm-2 1h2v1H8zm-1 1h1v1H7z" fill="#ffffff" />
+            <path d="M14 14h3v1h-3zm3 1h1v1h-1zm1 1h1v3h-1zm-1 3h1v1h-1zm-4 1h4v1h-4zm-3 0h1v1h-1z" fill="#b38600" />
+        </svg>
+    </button>
+
+    <div class="menu-panel" id="menuPanel">
+        <div class="menu-tabs">
+            <button class="tab-btn active" id="tabSucces" onclick="switchTab('succes')">Succès</button>
+            <button class="tab-btn" id="tabStats" onclick="switchTab('stats')">Stats</button>
+        </div>
+        
+        <div class="tab-content active" id="contentSucces">
+            <div class="success-section-title">Succès Normaux</div>
+            <div class="achievement-item" id="ach-play10">
+                <div class="achievement-icon">🥉</div>
+                <div class="achievement-info">
+                    <div class="achievement-title">Premiers pas</div>
+                    <div class="achievement-desc">Jouer 10 fois</div>
+                </div>
+            </div>
+            <div class="achievement-item" id="ach-play50">
+                <div class="achievement-icon">🥈</div>
+                <div class="achievement-info">
+                    <div class="achievement-title">Habitué</div>
+                    <div class="achievement-desc">Jouer 50 fois</div>
+                </div>
+            </div>
+            <div class="achievement-item" id="ach-play100">
+                <div class="achievement-icon">🥇</div>
+                <div class="achievement-info">
+                    <div class="achievement-title">Légende du Pif</div>
+                    <div class="achievement-desc">Jouer 100 fois</div>
+                </div>
+            </div>
+
+            <div class="success-section-title">Succès Secrets</div>
+            <div class="achievement-item" id="ach-halo">
+                <div class="achievement-icon">👁️‍🗨️</div>
+                <div class="achievement-info">
+                    <div class="achievement-title" id="ach-halo-title">Succès Secret</div>
+                    <div class="achievement-desc" id="ach-halo-desc">???</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="contentStats">
+            <div class="stat-line">
+                <span>Temps sur le site :</span>
+                <span id="statTime">0 h 0 min</span>
+            </div>
+            <div class="stat-line">
+                <span>Lancers de pièce :</span>
+                <span id="statFlips">0</span>
+            </div>
+            <div class="stat-line">
+                <span>Succès débloqués :</span>
+                <span id="statCount">0 / 4</span>
+            </div>
+        </div>
+    </div>
+
+    <h1>Pif ou Paf</h1>
+    <p>Fais ton choix et lance la pièce !</p>
+
+    <div class="coin-container">
+        <div class="coin" id="coin" onclick="flipCoin()">
+            <div class="side heads">PIF</div>
+            <div class="side tails">PAF</div>
+        </div>
+    </div>
+
+    <button class="flip-btn" onclick="flipCoin()">Lancer la pièce</button>
+    
+    <div id="result"></div>
+    <div id="halo-message"></div>
+
+    <div class="lever-wrapper" onclick="toggleTheme()">
+        <div class="lever-base">
+            <div class="lever-stick" id="leverStick"></div>
+        </div>
+        <div class="lever-label">Mode</div>
+    </div>
+
+    <div class="youtube-container">
+        <div class="promo-bubble" id="promoBubble" onclick="closeBubble()">
+            va voir ma chaine stp ⬇️
+        </div>
+        <a class="youtube-link" href="https://youtube.com/@le-evy?si=pHqpua4ih3JTSrdV" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24">
+                <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+        </a>
+    </div>
+
+    <script>
+        let coin = document.getElementById('coin');
+        let resultDiv = document.getElementById('result');
+        let haloDiv = document.getElementById('halo-message');
+        let promoBubble = document.getElementById('promoBubble');
+        let isFlashing = false;
+        let pifStreak = 0;
+
+        let leverClicks = 0;
+        let lastClickTime = 0;
+
+        let totalFlips = parseInt(localStorage.getItem('pifpaf_flips')) || 0;
+        let totalSeconds = parseInt(localStorage.getItem('pifpaf_seconds')) || 0;
+        let unlockedAchievements = JSON.parse(localStorage.getItem('pifpaf_unlocked')) || {};
+
+        setTimeout(() => { closeBubble(); }, 5000);
+        function closeBubble() { promoBubble.classList.add('hidden'); }
+
+        setInterval(() => {
+            totalSeconds++;
+            localStorage.setItem('pifpaf_seconds', totalSeconds);
+            updateStatsDOM();
+        }, 1000);
+
+        function updateStatsDOM() {
+            let h = Math.floor(totalSeconds / 3600);
+            let m = Math.floor((totalSeconds % 3600) / 60);
+            document.getElementById('statTime').innerText = `${h} h ${m} min`;
+            document.getElementById('statFlips').innerText = totalFlips;
+            
+            let count = Object.keys(unlockedAchievements).length;
+            document.getElementById('statCount').innerText = `${count} / 4`;
+        }
+
+        function checkAchievements() {
+            if (totalFlips >= 10) unlock('play10', '🥉 Succès Débloqué : Jouer 10 fois !');
+            if (totalFlips >= 50) unlock('play50', '🥈 Succès Débloqué : Jouer 50 fois !');
+            if (totalFlips >= 100) unlock('play100', '🥇 Succès Débloqué : L\'élite du Pif !');
+            refreshAchievementsUI();
+        }
+
+        function unlock(id, textAlert) {
+            if (!unlockedAchievements[id]) {
+                unlockedAchievements[id] = true;
+                localStorage.setItem('pifpaf_unlocked', JSON.stringify(unlockedAchievements));
+                triggerBanner(textAlert);
+                updateStatsDOM();
+            }
+        }
+
+        function refreshAchievementsUI() {
+            if (unlockedAchievements['play10']) document.getElementById('ach-play10').classList.add('unlocked');
+            if (unlockedAchievements['play50']) document.getElementById('ach-play50').classList.add('unlocked');
+            if (unlockedAchievements['play100']) document.getElementById('ach-play100').classList.add('unlocked');
+            
+            if (unlockedAchievements['halo']) {
+                document.getElementById('ach-halo').classList.add('unlocked');
+                document.getElementById('ach-halo-title').innerText = "Infaillible Spartan";
+                document.getElementById('ach-halo-desc').innerText = "Découvrir l'easter egg halo";
+            }
+        }
+
+        function triggerBanner(text) {
+            let banner = document.getElementById('bannerNotification');
+            banner.innerText = text;
+            banner.classList.add('show');
+            
+            for (let i = 0; i < 30; i++) {
+                createConfetti();
+            }
+
+            setTimeout(() => {
+                banner.classList.remove('show');
+            }, 4000);
+        }
+
+        function createConfetti() {
+            let confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            let side = Math.random() < 0.5 ? Math.floor(Math.random() * 100) : window.innerWidth - Math.floor(Math.random() * 100) - 10;
+            confetti.style.left = side + 'px';
+            confetti.style.top = Math.floor(Math.random() * 50) + 'px';
+            
+            let colors = ['#ffd700', '#ff0000', '#ffffff', '#00adb5', '#5cdb95'];
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => { confetti.remove(); }, 1500);
+        }
+
+        function flipCoin() {
+            if (isFlashing) return; 
+            isFlashing = true;
+            resultDiv.innerText = "";
+            
+            let isHeads = Math.random() < 0.5;
+            let randomRotations = Math.floor(Math.random() * 4) + 5; 
+            let finalDegrees = randomRotations * 360 + (isHeads ? 0 : 180);
+            
+            coin.style.transform = `rotateY(${finalDegrees}deg)`;
+            
+            setTimeout(() => {
+                totalFlips++;
+                localStorage.setItem('pifpaf_flips', totalFlips);
+                updateStatsDOM();
+                checkAchievements();
+
+                if (isHeads) {
+                    resultDiv.innerText = "Résultat : PIF !";
+                    pifStreak++;
+                    if (pifStreak === 9) {
+                        haloDiv.innerText = "comme le master chief GG";
+                        unlock('halo', "👁️‍尋 Succès Secret : Découvre l'easter egg halo");
+                        setTimeout(() => { haloDiv.innerText = ""; }, 3000);
+                        pifStreak = 0;
+                    }
+                } else {
+                    resultDiv.innerText = "Résultat : PAF !";
+                    pifStreak = 0;
+                }
+                isFlashing = false;
+            }, 2000);
+        }
+
+        // Gestion d'ouverture/fermeture des menus (avec fermeture automatique de l'autre menu pour éviter les bugs d'affichage)
+        function toggleMenu() {
+            document.getElementById('changelogPanel').classList.remove('open');
+            document.getElementById('menuPanel').classList.toggle('open');
+        }
+
+        function toggleChangelog() {
+            document.getElementById('menuPanel').classList.remove('open');
+            document.getElementById('changelogPanel').classList.toggle('open');
+        }
+
+        function switchTab(tab) {
+            document.getElementById('tabSucces').classList.remove('active');
+            document.getElementById('tabStats').classList.remove('active');
+            document.getElementById('contentSucces').classList.remove('active');
+            document.getElementById('contentStats').classList.remove('active');
+
+            if (tab === 'succes') {
+                document.getElementById('tabSucces').classList.add('active');
+                document.getElementById('contentSucces').classList.add('active');
+            } else {
+                document.getElementById('tabStats').classList.add('active');
+                document.getElementById('contentStats').classList.add('active');
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.body.removeAttribute('data-theme');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+            }
+
+            let now = Date.now();
+            if (leverClicks > 0) {
+                let timePassed = (now - lastClickTime) / 1000;
+                if (timePassed >= 3) {
+                    leverClicks = 0;
+                }
+            }
+            
+            leverClicks++;
+            lastClickTime = now;
+
+            if (leverClicks === 10) {
+                haloDiv.innerText = "c'est beau hein ?";
+                leverClicks = 0;
+                setTimeout(() => {
+                    if (haloDiv.innerText === "c'est beau hein ?") {
+                        haloDiv.innerText = "";
+                    }
+                }, 3000);
+            }
+        }
+
+        updateStatsDOM();
+        refreshAchievementsUI();
+    </script>
+</body>
+</html>
