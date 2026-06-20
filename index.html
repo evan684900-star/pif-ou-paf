@@ -727,11 +727,17 @@
 
     <div class="banner-notification" id="bannerNotification">SUCCÈS DÉBLOQUÉ !</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v4.2.0</button>
+    <button class="version-btn" onclick="toggleChangelog()">v4.2.1</button>
 
     <div class="changelog-panel" id="changelogPanel">
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
+            <div class="version-block">
+                <div class="version-title">v4.2.1 - Télémétrie</div>
+                <ul class="version-list">
+                    <li>Intégration du script de suivi Vercel Web Analytics Insights.</li>
+                </ul>
+            </div>
             <div class="version-block">
                 <div class="version-title">v4.2.0 - Boutique & Système de Skins</div>
                 <ul class="version-list">
@@ -1247,7 +1253,9 @@
         coin.setAttribute('data-skin', currentSkin);
         updateStatsDOM();
         refreshAchievementsUI();
-   <!-- Vercel Analytics pour site HTML statique -->
+    </script>
+
+    <!-- Vercel Analytics pour site HTML statique -->
     <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
