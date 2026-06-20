@@ -521,6 +521,29 @@
             top: 25px;
         }
 
+        /* --- TIMER DE RÉCUPÉRATION ROUGE (V5.0) --- */
+        .recovery-timer-banner {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff0000;
+            color: #ffffff;
+            border: 4px solid #ffffff;
+            padding: 10px 25px;
+            font-family: monospace;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            z-index: 1001;
+            transition: top 0.4s ease;
+        }
+
+        .recovery-timer-banner.show {
+            top: 20px;
+        }
+
         .confetti {
             position: fixed;
             width: 8px;
@@ -752,13 +775,24 @@
 
     <div class="banner-notification" id="bannerNotification">SUCCÈS DÉBLOQUÉ !</div>
 
+    <!-- BANNER TIMER ROUGE POUR SÉRIE RECUPERABLE -->
+    <div class="recovery-timer-banner" id="recoveryTimerBanner">⚠️ SÉRIE PERDUE ! RESTAUREZ-LA DANS LA BOUTIQUE : <span id="recoverySeconds">60</span>s</div>
+
     <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v4.2.1</button>
+    <button class="version-btn" onclick="toggleChangelog()">v5.0</button>
 
     <div class="changelog-panel" id="changelogPanel">
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
+            <div class="version-block">
+                <div class="version-title">v5.0 - Boutique &amp; Système de Bonus</div>
+                <ul class="version-list">
+                    <li>Changement du Bonus de Chance (🍀) : Dure désormais 2min et 30s après achat.</li>
+                    <li>Changement de la Récupération de Série (🔥) : Devient un consommable à acheter et utiliser directement dans la boutique pendant le compte à rebours critique pour restaurer instantanément la série.</li>
+                    <li>Affichage dynamique précis des combos et des records sous le score.</li>
+                </ul>
+            </div>
             <div class="version-block">
                 <div class="version-title">v4.2.1 - Télémétrie</div>
                 <ul class="version-list">
@@ -766,52 +800,16 @@
                 </ul>
             </div>
             <div class="version-block">
-                <div class="version-title">v4.2.0 - Boutique & Système de Skins</div>
+                <div class="version-title">v4.2.0 - Boutique &amp; Système de Skins</div>
                 <ul class="version-list">
                     <li>Ajout de la boutique de skins à droite de l'icône succès.</li>
-                    <li>Skin Lingot d'Or Minecraft disponible pour 500 points.</li>
-                    <li>Skin Anneau de Halo disponible pour 20 points.</li>
-                    <li>Skin Pièce YouTube à débloquer en cliquant sur le lien YouTube.</li>
-                    <li>Correction de l'affichage de version figé.</li>
+                    <li>Skins Minecraft, Halo et YouTube disponibles.</li>
                 </ul>
             </div>
             <div class="version-block">
-                <div class="version-title">v4.1.3 - Correction de la Médaille SVG</div>
+                <div class="version-title">v1.0.0 à v4.0.0 - Fondations</div>
                 <ul class="version-list">
-                    <li>Correction complète des chemins SVG pour supprimer les déformations de l'icône de succès.</li>
-                    <li>Alignement précis en pixel art sur une grille propre de 32x32.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v4.0.0 - Refonte Graphique Majeure</div>
-                <ul class="version-list">
-                    <li>Mise en place de l'arrière-plan interactif en grille de points.</li>
-                    <li>Ajout du levier mécanique pour alterner les thèmes Clair et Sombre.</li>
-                    <li>Optimisation des performances graphiques et des transitions css.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v3.0.0 - Système de Paris & Devise</div>
-                <ul class="version-list">
-                    <li>Introduction du système de score et intégration de la monnaie (Points).</li>
-                    <li>Boutons de choix de pari exclusifs entre PIF et PAF.</li>
-                    <li>Gain de +3 Points en cas de prédiction correcte.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v2.0.0 - Menu Statistiques et Succès</div>
-                <ul class="version-list">
-                    <li>Création de l'icône Médaille ouvrant les panneaux de suivi de progression.</li>
-                    <li>Suivi en direct du temps d'activité global passé sur l'application.</li>
-                    <li>Déploiement des succès progressifs (10, 50 et 100 lancers).</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v1.0.0 - Lancement Officiel</div>
-                <ul class="version-list">
-                    <li>Lancement du noyau algorithmique de la pièce Pif ou Paf.</li>
-                    <li>Intégration de la physique 3D CSS de retournement aléatoire de la pièce.</li>
-                    <li>Interface utilisateur de base adaptative.</li>
+                    <li>Mise en place de la physique 3D, gestion des paris, statistiques, thèmes Clair/Sombre et succès globaux.</li>
                 </ul>
             </div>
         </div>
@@ -834,7 +832,7 @@
         </svg>
     </button>
 
-    <button class="shop-btn" onclick="toggleShop()" title="Boutique de Skins">
+    <button class="shop-btn" onclick="toggleShop()" title="Boutique de Skins &amp; Bonus">
         <svg viewBox="0 0 32 32" shape-rendering="crispEdges">
             <path d="M4 9h24v2H4zm0 2h2v14h-2zm22 0h2v14h-2zm-22 14h24v2H4z" fill="#000000"/>
             <path d="M5 10h22v4H5z" fill="#ff3838"/>
@@ -846,7 +844,7 @@
     </button>
 
     <div class="shop-panel" id="shopPanel">
-        <div class="changelog-header" style="color: #00adb5;">Boutique de Skins</div>
+        <div class="changelog-header" style="color: #00adb5;">Boutique &amp; Bonus</div>
         <div class="changelog-content" id="shopContent"></div>
     </div>
 
@@ -933,14 +931,22 @@
 
         <button class="flip-btn" id="flipButton" onclick="flipCoin()" disabled>Choisis un pari</button>
         
-        <div class="points-display">
-            <span id="pointsValue">0</span>
-            <svg class="pixel-coin-icon" viewBox="0 0 8 8" shape-rendering="crispEdges">
-                <path d="M2 0h4v1H2zM1 1h6v1H1zm-1 2h8v4H0zm1 4h6v1H1zm1 1h4v1H2z" fill="#cca300" />
-                <path d="M2 1h4v1H2zm-1 1h6v1H1zm0 1h1v3H1zm5 0h1v3H6zm-4 3h4v1H2z" fill="#ffd700" />
-                <path d="M2 2h3v1H2zm0 1h1v2H2zm2 1h1v1H4z" fill="#fff59d" />
-                <path d="M5 3h1v3H5zm-2 2h2v1H3z" fill="#b38600" />
-            </svg>
+        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+            <div class="points-display" style="margin-top: 0;">
+                <span id="pointsValue">0</span>
+                <svg class="pixel-coin-icon" viewBox="0 0 8 8" shape-rendering="crispEdges">
+                    <path d="M2 0h4v1H2zM1 1h6v1H1zm-1 2h8v4H0zm1 4h6v1H1zm1 1h4v1H2z" fill="#cca300" />
+                    <path d="M2 1h4v1H2zm-1 1h6v1H1zm0 1h1v3H1zm5 0h1v3H6zm-4 3h4v1H2z" fill="#ffd700" />
+                    <path d="M2 2h3v1H2zm0 1h1v2H2zm2 1h1v1H4z" fill="#fff59d" />
+                    <path d="M5 3h1v3H5zm-2 2h2v1H3z" fill="#b38600" />
+                </svg>
+                <span style="margin-left: 15px; font-weight: bold; display: flex; align-items: center; gap: 4px; color: #ff5500;">
+                    <span id="currentComboDisplay">0</span>🔥
+                </span>
+            </div>
+            <div style="font-family: monospace; font-size: 13px; font-weight: bold; margin-top: 6px; color: var(--sub-text-color);">
+                plus haute combo : <span id="highestComboDisplay">0</span>
+            </div>
         </div>
 
         <div id="result"></div>
@@ -974,7 +980,7 @@
         let comboOverlay = document.getElementById('comboOverlay');
         let isFlashing = false;
         let pifStreak = 0;
-        let winStreak = 0; // Compteur de victoires consécutives pour les combos
+        let winStreak = 0; 
         let selectedBet = null;
 
         let leverClicks = 0;
@@ -988,15 +994,38 @@
         let ownedSkins = JSON.parse(localStorage.getItem('pifpaf_owned_skins')) || { default: true };
         let currentSkin = localStorage.getItem('pifpaf_current_skin') || 'default';
 
+        // GESTION DES CHECKS TEMPORELS ET SÉRIES V5.0 MODIFIÉS
+        let highestCombo = parseInt(localStorage.getItem('pifpaf_highest_combo')) || 0;
+        let chanceSecondsLeft = parseInt(localStorage.getItem('pifpaf_chance_left')) || 0;
+        
+        let recoveryTimer = null;
+        let recoverySecondsLeft = 0;
+        let savedStreakBeforeLoss = 0;
+
         let bgClicks = 0;
         let lastBgClickTime = 0;
 
         setTimeout(() => { closeBubble(); }, 5000);
         function closeBubble() { promoBubble.classList.add('hidden'); }
 
+        // COMPTEUR GLOBAL INTERNE MAJ TEMPS RÉEL (BONUS TICKING)
         setInterval(() => {
             totalSeconds++;
             localStorage.setItem('pifpaf_seconds', totalSeconds);
+            
+            // Compte à rebours dynamique du Bonus de Chance
+            if (chanceSecondsLeft > 0) {
+                chanceSecondsLeft--;
+                localStorage.setItem('pifpaf_chance_left', chanceSecondsLeft);
+                if (chanceSecondsLeft === 0) {
+                    triggerBanner("Le bonus de chance a expiré ! 🍀");
+                }
+                // Si la boutique est visible, rafraîchir en continu le timer
+                if (document.getElementById('shopPanel').classList.contains('open')) {
+                    refreshShopUI();
+                }
+            }
+            
             updateStatsDOM();
         }, 1000);
 
@@ -1005,6 +1034,9 @@
             document.getElementById('statFlips').innerText = totalFlips;
             document.getElementById('pointsValue').innerText = userPoints;
             document.getElementById('statCount').innerText = `${Object.keys(unlockedAchievements).length} / 4`;
+            
+            document.getElementById('currentComboDisplay').innerText = winStreak;
+            document.getElementById('highestComboDisplay').innerText = highestCombo;
         }
 
         function selectBet(side) {
@@ -1055,11 +1087,9 @@
             setTimeout(() => { banner.classList.remove('show'); }, 4000);
         }
 
-        // Système de flash combo au milieu de l'écran
         function triggerComboFlash(streakCount) {
             comboOverlay.innerText = `COMBO X${streakCount}`;
             comboOverlay.style.animation = 'none';
-            // Force le recalcul du layout pour réinitialiser l'animation CSS
             comboOverlay.offsetHeight; 
             comboOverlay.style.animation = 'comboPopFade 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
         }
@@ -1082,18 +1112,28 @@
 
         function flipCoin() {
             if (isFlashing || !selectedBet) return; 
+            
+            // Lancer une pièce annule la période de secours en cours si elle n'a pas été achetée à temps
+            if (recoveryTimer) {
+                stopRecoveryTimer();
+            }
+
             isFlashing = true;
             resultDiv.innerText = "";
             flipButton.disabled = true;
             
-            let isHeads = Math.random() < 0.5;
+            // +10% de chance si le timer de chance est actif
+            let winChance = (chanceSecondsLeft > 0) ? 0.60 : 0.50;
+            let playerWins = Math.random() < winChance;
+            let rollResult = playerWins ? selectedBet : (selectedBet === 'PIF' ? 'PAF' : 'PIF');
+            
+            let isHeads = (rollResult === "PIF");
             let finalDegrees = (Math.floor(Math.random() * 4) + 5) * 360 + (isHeads ? 0 : 180);
             coin.style.transform = `rotateY(${finalDegrees}deg)`;
             
             setTimeout(() => {
                 totalFlips++;
                 localStorage.setItem('pifpaf_flips', totalFlips);
-                let rollResult = isHeads ? "PIF" : "PAF";
 
                 if (isHeads) {
                     resultDiv.innerText = "Résultat : PIF !";
@@ -1110,10 +1150,14 @@
                 }
 
                 if (selectedBet === rollResult) {
-                    winStreak++; // Incrémente la série globale de victoires
-                    let pointsGagnes = 3;
+                    winStreak++;
                     
-                    // Si le joueur a une série d'au moins 2 victoires, on applique le bonus mécanique
+                    if (winStreak > highestCombo) {
+                        highestCombo = winStreak;
+                        localStorage.setItem('pifpaf_highest_combo', highestCombo);
+                    }
+
+                    let pointsGagnes = 3;
                     if (winStreak >= 2) {
                         pointsGagnes = 3 * winStreak;
                         triggerComboFlash(winStreak);
@@ -1124,7 +1168,15 @@
                     triggerBanner(`BON PARI ! +${pointsGagnes} Points 🪙`);
                 } else {
                     resultDiv.innerText += " (Pari perdu)";
-                    winStreak = 0; // Réinitialise la série de combos si perdu
+                    
+                    // Si le joueur avait une série, on ouvre la fenêtre d'achat direct de récupération
+                    if (winStreak > 0) {
+                        savedStreakBeforeLoss = winStreak;
+                        winStreak = 0; 
+                        startRecoveryCountdown();
+                    } else {
+                        winStreak = 0;
+                    }
                 }
 
                 selectedBet = null;
@@ -1134,8 +1186,37 @@
                 isFlashing = false;
                 updateStatsDOM();
                 checkAchievements();
-                refreshShopUI();
+                if (document.getElementById('shopPanel').classList.contains('open')) refreshShopUI();
             }, 2000);
+        }
+
+        function startRecoveryCountdown() {
+            if (recoveryTimer) clearInterval(recoveryTimer);
+            recoverySecondsLeft = 60;
+            
+            let banner = document.getElementById('recoveryTimerBanner');
+            document.getElementById('recoverySeconds').innerText = recoverySecondsLeft;
+            banner.classList.add('show');
+            
+            recoveryTimer = setInterval(() => {
+                recoverySecondsLeft--;
+                document.getElementById('recoverySeconds').innerText = recoverySecondsLeft;
+                
+                if (recoverySecondsLeft <= 0) {
+                    stopRecoveryTimer();
+                    updateStatsDOM();
+                    triggerBanner("Temps écoulé : Série définitivement perdue ! 💔");
+                }
+            }, 1000);
+        }
+
+        function stopRecoveryTimer() {
+            if (recoveryTimer) {
+                clearInterval(recoveryTimer);
+                recoveryTimer = null;
+            }
+            document.getElementById('recoveryTimerBanner').classList.remove('show');
+            if (document.getElementById('shopPanel').classList.contains('open')) refreshShopUI();
         }
 
         function toggleMenu() {
@@ -1194,9 +1275,13 @@
             { id: 'youtube', name: 'Pièce YouTube', desc: 'Ronde. Débloquée via le lien YouTube !', cost: 0, type: 'youtube' }
         ];
 
+        // LOGIQUE D'AFFICHAGE MAJ BOUTIQUE POUR OBJETS TEMPORELS ET INSTANTANÉS
         function refreshShopUI() {
             let container = document.getElementById('shopContent');
             let html = '';
+            
+            // Partie Skins
+            html += `<div style="font-weight:bold; color:#ffd700; font-size:13px; margin-bottom:8px; border-bottom:2px dashed var(--menu-border);">-- SKINS D'APPARENCE --</div>`;
             skinsConfig.forEach(skin => {
                 let actionBtn = '';
                 if (currentSkin === skin.id) {
@@ -1213,6 +1298,32 @@
                 }
                 html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">${skin.name}</span><span style="font-size:11px; color:var(--sub-text-color);">${skin.desc}</span><div style="margin-top:5px;">${actionBtn}</div></div>`;
             });
+
+            // Partie Objets / Bonus Actifs
+            html += `<div style="font-weight:bold; color:#f8c216; font-size:13px; margin-top:15px; margin-bottom:8px; border-bottom:2px dashed var(--menu-border);">-- OBJETS ET BONUS --</div>`;
+            
+            // 1. Bouton Bonus de Chance 2m30s
+            let chanceBtn = '';
+            if (chanceSecondsLeft > 0) {
+                let m = Math.floor(chanceSecondsLeft / 60);
+                let s = chanceSecondsLeft % 60;
+                chanceBtn = `<button class="bet-btn selected" style="width:100%; cursor:not-allowed; background-color:#5cdb95; color:black; border-color:#5cdb95;" disabled>ACTIF (${m}m ${s < 10 ? '0' : ''}${s}s)</button>`;
+            } else {
+                let canBuy = userPoints >= 20;
+                chanceBtn = `<button class="bet-btn" style="width:100%; ${!canBuy ? 'opacity:0.5;' : ''}" onclick="buyBonus('chance', 20)" ${!canBuy ? 'disabled' : ''}>ACHETER (20 Pts)</button>`;
+            }
+            html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">Bonus de chance 🍀</span><span style="font-size:11px; color:var(--sub-text-color);">Augmente la chance de réussir ton pari de 10% pendant 2min et 30s.</span><div style="margin-top:5px;">${chanceBtn}</div></div>`;
+
+            // 2. Bouton Récupération de série immédiat
+            let recoveryBtn = '';
+            if (recoveryTimer !== null) {
+                let canBuy = userPoints >= 50;
+                recoveryBtn = `<button class="bet-btn" style="width:100%; background-color:#ff5500; color:white; border-color:#ff5500; ${!canBuy ? 'opacity:0.5;' : ''}" onclick="buyBonus('streakRecovery', 50)" ${!canBuy ? 'disabled' : ''}>UTILISER DIRECTEMENT (50 Pts)</button>`;
+            } else {
+                recoveryBtn = `<button class="bet-btn" style="width:100%; opacity:0.4; cursor:not-allowed;" disabled>INDISPONIBLE (Aucune perte)</button>`;
+            }
+            html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">Récupération de Série 🔥</span><span style="font-size:11px; color:var(--sub-text-color);">S'achète et s'utilise instantanément pour annuler votre dernière défaite (actif uniquement pendant le chrono rouge).</span><div style="margin-top:5px;">${recoveryBtn}</div></div>`;
+            
             container.innerHTML = html;
         }
 
@@ -1225,6 +1336,31 @@
                 triggerBanner("🛒 Skin acheté avec succès !");
                 updateStatsDOM();
                 refreshShopUI();
+            }
+        }
+
+        // TRAITEMENT DIRECT DES BONUS (DURÉE & UTILISATION IMMÉDIATE)
+        function buyBonus(id, cost) {
+            if (userPoints >= cost) {
+                if (id === 'chance') {
+                    userPoints -= cost;
+                    chanceSecondsLeft = 150; // 2 minutes 30 secondes
+                    localStorage.setItem('pifpaf_points', userPoints);
+                    localStorage.setItem('pifpaf_chance_left', chanceSecondsLeft);
+                    triggerBanner("🛒 Bonus de chance activé pour 2m30 ! 🍀");
+                    updateStatsDOM();
+                    refreshShopUI();
+                } else if (id === 'streakRecovery') {
+                    if (recoveryTimer !== null) {
+                        userPoints -= cost;
+                        winStreak = savedStreakBeforeLoss; // Restauration immédiate de la série
+                        localStorage.setItem('pifpaf_points', userPoints);
+                        stopRecoveryTimer();
+                        triggerBanner("🔥 Série restaurée instantanément avec succès !");
+                        updateStatsDOM();
+                        refreshShopUI();
+                    }
+                }
             }
         }
 
@@ -1269,14 +1405,14 @@
             userPoints += 500;
             localStorage.setItem('pifpaf_points', userPoints);
             updateStatsDOM();
-            refreshShopUI();
+            if (document.getElementById('shopPanel').classList.contains('open')) refreshShopUI();
             triggerBanner("DEV : +500 Points ajoutés ! 🪙");
         }
 
         function debugUnlockSkins() {
             skinsConfig.forEach(s => ownedSkins[s.id] = true);
             localStorage.setItem('pifpaf_owned_skins', JSON.stringify(ownedSkins));
-            refreshShopUI();
+            if (document.getElementById('shopPanel').classList.contains('open')) refreshShopUI();
             triggerBanner("DEV : Tous les skins débloqués ! 🛒");
         }
 
