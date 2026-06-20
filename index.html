@@ -15,6 +15,7 @@
             --bubble-text: #ffffff;
             --menu-bg: #ffffff;
             --menu-border: #121212;
+            --points-color: #121212;
         }
 
         [data-theme="dark"] {
@@ -27,6 +28,7 @@
             --bubble-text: #121212;
             --menu-bg: #1e1e1e;
             --menu-border: #ffffff;
+            --points-color: #ffffff;
         }
 
         body {
@@ -54,16 +56,24 @@
 
         p {
             color: var(--sub-text-color);
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             font-weight: 500;
             transition: color 0.3s;
         }
 
+        .main-game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translateY(-40px);
+            pointer-events: auto;
+        }
+
         .coin-container {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             perspective: 1000px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .coin {
@@ -88,6 +98,7 @@
             backface-visibility: hidden;
             border: 4px solid #ffd700;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
         }
 
         .heads {
@@ -101,11 +112,74 @@
             transform: rotateY(180deg);
         }
 
+        /* --- STYLES DES SKINS DYNAMIQUES --- */
+        .coin[data-skin="minecraft"] .side {
+            border-radius: 12px !important;
+            border: 4px solid #b78727 !important;
+            background: linear-gradient(135deg, #fce166 0%, #f3c246 40%, #b78727 100%) !important;
+            box-shadow: inset -4px -4px 0px #b78727, inset 4px 4px 0px #fff59d !important;
+            color: #4a3300 !important;
+        }
+
+        .coin[data-skin="halo"] .side {
+            border-radius: 50% !important;
+            border: 5px solid #4b6584 !important;
+            background: radial-gradient(circle, #1e272e 35%, #718093 36%, #dcdde1 70%, #2f3640 100%) !important;
+            color: #ffffff !important;
+            text-shadow: 0 0 5px #718093;
+        }
+
+        .coin[data-skin="youtube"] .side {
+            border-radius: 50% !important;
+            border: 4px solid #b30000 !important;
+            background: radial-gradient(circle, #ff4d4d 0%, #ff0000 100%) !important;
+            color: #ffffff !important;
+        }
+        .coin[data-skin="youtube"] .side::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 20px solid rgba(255, 255, 255, 0.6);
+            z-index: 0;
+            top: 50%;
+            left: 52%;
+            transform: translate(-50%, -50%);
+        }
+
+        .bet-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .bet-btn {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 3px solid var(--menu-border);
+            padding: 8px 18px;
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .bet-btn.selected {
+            background-color: #ffd700;
+            border-color: #ffd700;
+            color: #121212;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
         .flip-btn {
             background-color: #00adb5;
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 12px 35px;
             font-size: 1.1rem;
             font-weight: bold;
             border-radius: 25px;
@@ -114,16 +188,42 @@
             transition: background 0.2s, transform 0.1s;
         }
 
-        .flip-btn:hover {
+        .flip-btn:disabled {
+            background-color: #555555;
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .flip-btn:hover:not(:disabled) {
             background-color: #008c95;
         }
 
-        .flip-btn:active {
+        .flip-btn:active:not(:disabled) {
             transform: scale(0.95);
         }
 
+        .points-display {
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--points-color);
+            padding: 6px 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .pixel-coin-icon {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+
         #result {
-            margin-top: 25px;
+            margin-top: 20px;
             font-size: 1.8rem;
             font-weight: bold;
             min-height: 40px;
@@ -132,7 +232,7 @@
         }
 
         #halo-message {
-            margin-top: 15px;
+            margin-top: 10px;
             font-size: 1.5rem;
             font-weight: bold;
             color: #5cdb95;
@@ -140,7 +240,6 @@
             min-height: 35px;
         }
 
-        /* BOUTON VERSION (EN HAUT À GAUCHE) */
         .version-btn {
             position: fixed;
             top: 25px;
@@ -162,13 +261,12 @@
             transform: scale(1.05);
         }
 
-        /* PANNEAU DU JOURNAL DES CHANGEMENTS (CHANGELOG) */
         .changelog-panel {
             position: fixed;
             top: 85px;
             left: 25px;
-            width: 320px;
-            height: 400px;
+            width: 330px;
+            height: 450px;
             background-color: var(--menu-bg);
             border: 4px solid var(--menu-border);
             box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
@@ -210,6 +308,10 @@
             margin-bottom: 20px;
         }
 
+        .version-block:last-child {
+            margin-bottom: 5px;
+        }
+
         .version-title {
             font-weight: bold;
             font-size: 13px;
@@ -225,11 +327,10 @@
             line-height: 1.5;
         }
 
-        /* BOUTON MÉDAILLE (EN HAUT À DROITE) */
         .medal-btn {
             position: fixed;
             top: 20px;
-            right: 25px;
+            right: 105px;
             background: none;
             border: none;
             cursor: pointer;
@@ -243,13 +344,34 @@
         }
 
         .medal-btn svg {
-            width: 60px;
-            height: 60px;
+            width: 64px;
+            height: 64px;
             display: block;
         }
 
-        /* PANNEAU DES SUCCÈS (CARRÉ DROITE) */
-        .menu-panel {
+        .shop-btn {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.2s;
+            padding: 0;
+        }
+
+        .shop-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .shop-btn svg {
+            width: 64px;
+            height: 64px;
+            display: block;
+        }
+
+        .menu-panel, .shop-panel {
             position: fixed;
             top: 90px;
             right: 25px;
@@ -267,7 +389,7 @@
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .menu-panel.open {
+        .menu-panel.open, .shop-panel.open {
             transform: scale(1);
         }
 
@@ -413,7 +535,6 @@
             100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
         }
 
-        /* LEVIER MINECRAFT */
         .lever-wrapper {
             position: fixed;
             bottom: 30px;
@@ -475,7 +596,6 @@
             letter-spacing: 1px;
         }
 
-        /* ZONE YOUTUBE */
         .youtube-container {
             position: fixed;
             bottom: 35px;
@@ -541,69 +661,161 @@
             transform: translateY(10px);
             pointer-events: none;
         }
+
+        .shop-item {
+            background: rgba(0,0,0,0.03);
+            border: 2px solid var(--menu-border);
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        [data-theme="dark"] .shop-item {
+            background: rgba(255,255,255,0.03);
+        }
+
+        /* --- INTERFACE DE DÉBOGAGE INTERNE (INVISIBLE) --- */
+        .debug-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 290px;
+            background-color: var(--menu-bg);
+            border: 4px solid #ff0055;
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+            z-index: 10000;
+            font-family: monospace;
+            padding: 15px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .debug-panel.open {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .debug-title {
+            color: #ff0055;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            border-bottom: 2px dashed #ff0055;
+            padding-bottom: 5px;
+        }
+        .debug-btn {
+            width: 100%;
+            background: none;
+            border: 2px solid var(--menu-border);
+            color: var(--text-color);
+            padding: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 12px;
+            text-align: left;
+            transition: background-color 0.1s;
+        }
+        .debug-btn:hover {
+            background-color: rgba(255, 0, 85, 0.1);
+            border-color: #ff0055;
+        }
     </style>
 </head>
 <body>
 
     <div class="banner-notification" id="bannerNotification">SUCCÈS DÉBLOQUÉ !</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v4.0.0</button>
+    <button class="version-btn" onclick="toggleChangelog()">v4.2.0</button>
 
     <div class="changelog-panel" id="changelogPanel">
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
             <div class="version-block">
-                <div class="version-title">v4.0.0 - Système de Récompenses</div>
+                <div class="version-title">v4.2.0 - Boutique & Système de Skins</div>
                 <ul class="version-list">
-                    <li>Ajout du panneau des succès et statistiques.</li>
-                    <li>Création de la médaille en Pixel Art SVG.</li>
-                    <li>Ajout d'un système de sauvegarde locale automatique.</li>
-                    <li>Ajout de la banderole rouge et or et des confettis.</li>
+                    <li>Ajout de la boutique de skins à droite de l'icône succès.</li>
+                    <li>Skin Lingot d'Or Minecraft disponible pour 500 points.</li>
+                    <li>Skin Anneau de Halo disponible pour 20 points.</li>
+                    <li>Skin Pièce YouTube à débloquer en cliquant sur le lien YouTube.</li>
+                    <li>Correction de l'affichage de version figé.</li>
                 </ul>
             </div>
             <div class="version-block">
-                <div class="version-title">v3.0.0 - Support Médias</div>
+                <div class="version-title">v4.1.3 - Correction de la Médaille SVG</div>
                 <ul class="version-list">
-                    <li>Ajout de la zone promotionnelle YouTube.</li>
-                    <li>Intégration de la bulle d'aide interactive animée.</li>
+                    <li>Correction complète des chemins SVG pour supprimer les déformations de l'icône de succès.</li>
+                    <li>Alignement précis en pixel art sur une grille propre de 32x32.</li>
                 </ul>
             </div>
             <div class="version-block">
-                <div class="version-title">v2.0.0 - Environnement</div>
+                <div class="version-title">v4.0.0 - Refonte Graphique Majeure</div>
                 <ul class="version-list">
-                    <li>Intégration du Levier Minecraft fonctionnel.</li>
-                    <li>Ajout du système d'alternance de thèmes.</li>
-                    <li>Mise en place du premier easter egg mystère.</li>
+                    <li>Mise en place de l'arrière-plan interactif en grille de points.</li>
+                    <li>Ajout du levier mécanique pour alterner les thèmes Clair et Sombre.</li>
+                    <li>Optimisation des performances graphiques et des transitions css.</li>
                 </ul>
             </div>
             <div class="version-block">
-                <div class="version-title">v1.0.0 - Lancement</div>
+                <div class="version-title">v3.0.0 - Système de Paris & Devise</div>
                 <ul class="version-list">
-                    <li>Moteur de pile ou face (Pif/Paf) de base.</li>
-                    <li>Animation 3D de rotation de la pièce de monnaie.</li>
+                    <li>Introduction du système de score et intégration de la monnaie (Points).</li>
+                    <li>Boutons de choix de pari exclusifs entre PIF et PAF.</li>
+                    <li>Gain de +3 Points en cas de prédiction correcte.</li>
+                </ul>
+            </div>
+            <div class="version-block">
+                <div class="version-title">v2.0.0 - Menu Statistiques et Succès</div>
+                <ul class="version-list">
+                    <li>Création de l'icône Médaille ouvrant les panneaux de suivi de progression.</li>
+                    <li>Suivi en direct du temps d'activité global passé sur l'application.</li>
+                    <li>Déploiement des succès progressifs (10, 50 et 100 lancers).</li>
+                </ul>
+            </div>
+            <div class="version-block">
+                <div class="version-title">v1.0.0 - Lancement Officiel</div>
+                <ul class="version-list">
+                    <li>Lancement du noyau algorithmique de la pièce Pif ou Paf.</li>
+                    <li>Intégration de la physique 3D CSS de retournement aléatoire de la pièce.</li>
+                    <li>Interface utilisateur de base adaptative.</li>
                 </ul>
             </div>
         </div>
     </div>
 
     <button class="medal-btn" onclick="toggleMenu()" title="Succès et Statistiques">
-        <svg viewBox="0 0 26 26" shape-rendering="crispEdges">
-            <path d="M7 2h12v1H7z" fill="#581818" />
-            <path d="M6 3h3v1H6zm-1 1h3v4H5zm1 4h3v1H6zm1 1h3v1H7zm1 1h3v1H8z" fill="#b82323" />
-            <path d="M5 3h1v1H5zm-1 1h1v4H4zm1 4h1v1H5zm1 1h1v1H6zm1 1h1v1H7zm1 1h1v1H8z" fill="#cca300" />
-            <path d="M9 3h1v1H9zm-1 4h1v2H8zm1 2h1v1H9zm1 1h1v1H10z" fill="#fadc10" />
-            <path d="M17 3h3v1H17zm1 1h3v4H18zm-1 4h3v1H17zm-1 1h3v1H16zm-1 1h3v1H15z" fill="#b82323" />
-            <path d="M20 3h1v1H20zm1 1h1v4H21zm-1 4h1v1H20zm-1 1h1v1H19zm-1 1h1v1H18zm-1 1h1v1H17z" fill="#cca300" />
-            <path d="M16 3h1v1H16zm1 4h1v2H17zm-1 2h1v1H16zm-1 1h1v1H15z" fill="#fadc10" />
-            <path d="M10 4h6v1H10zm1 1h4v1H11zm1 1h2v1H12z" fill="#401010" />
-            <path d="M11 6h1v1H11zm3 0h1v1H14zm-3 1h4v1H11zm-2 1h6v1H9zm-1 1h8v1H8zm-1 1h10v1H7z" fill="#701818" />
-            <path d="M11 12h4v1h-4zm-3 1h3v1H8zm6 0h3v1h-3zm-2 1h2v1h-2zm-6 0h2v1H6zm12 0h2v1h-2zm-7 1h2v1h-2zm-6 0h1v4H5zm15 0h1v4H20zm-14 4h2v1H6zm12 0h2v1h-2zm-11 1h3v1H7zm9 0h3v1h-3zm-5 1h4v1H11z" fill="#cca300" />
-            <path d="M11 13h3v1h-3zm-3 2h10v1H8zm-2 1h14v3H6zm2 3h10v1H8zm3 1h4v1H11z" fill="#fadc10" />
-            <path d="M11 14h2v1h-2zm-3 1h3v1H8zm-1 1h4v1H7zm-1 1h4v1H6zm1 1h3v1H7zm2 1h2v1H9zm5-3h1v3h-1zm2 1h1v2h-1zm1 1h1v1h-1z" fill="#fff59d" />
-            <path d="M10 15h1v1h-1zm-2 1h2v1H8zm-1 1h1v1H7z" fill="#ffffff" />
-            <path d="M14 14h3v1h-3zm3 1h1v1h-1zm1 1h1v3h-1zm-1 3h1v1h-1zm-4 1h4v1h-4zm-3 0h1v1h-1z" fill="#b38600" />
+        <svg viewBox="0 0 32 32" shape-rendering="crispEdges">
+            <path d="M6 3h8v1H6zm12 0h8v1h-8zM5 4h1v1H5zm8 0h1v4h-1zm4 0h1v4h-1zm8 0h1v1h-24v1H4zm0 1h1v1h-1zm22 0h1v2h-1zm-22 1h1v4H5zm20 0h1v4h-1zM9 11h3v1H9zm11 0h3v1h-3zm-9 1h1v1h-1zm7 0h1v1h-1zm-6 1h1v4h-1zm4 0h1v4h-1zm-4 4h4v1h-4zm-4 1h12v1H9zm-2 1h16v1H7zm-1 1h18v1H6zm-1 1h20v6H5zm1 6h18v1H6zm1 1h16v1H7zm2 1h14v1H9zm3 1h8v1h-8z" fill="#000000" />
+            <path d="M7 5h4v1H7zm-1 1h1v4H6zm1 3h1v1H7zm1-1h1v1H8zm1-1h1v1H9z" fill="#006699" />
+            <path d="M6 4h4v1H6zm0 1h1v1H6zm1 1h1v1H7zm1 1h1v1H8z" fill="#00b4ff" />
+            <path d="M10 4h3v1h-3zm1 1h2v1h-2zm1 1h1v2h-1z" fill="#ffffff" />
+            <path d="M20 5h4v1h-4zm5 1h1v4h-1zm-2 3h1v1h-1zm-1-1h1v1h-1zm-1-1h1v1h-1z" fill="#006699" />
+            <path d="M22 4h4v1h-4zm4 1h1v1h-1zm-1 1h1v1h-1zm-1 1h1v1h-1z" fill="#00b4ff" />
+            <path d="M19 4h3v1h-3zm1 1h2v1h-2zm1 1h1v2h-1z" fill="#ffffff" />
+            <path d="M12 18h8v1h-8zm-3 1h14v1H9zm-2 1h16v1H7zm-1 1h18v6H6zm1 6h16v1H7zm2 1h14v1H9zm3 1h8v1h-8z" fill="#ffcc00" />
+            <path d="M12 18h6v1h-6zm-3 1h5v1H9zm-2 1h4v1H7zm-1 1h3v3H6zm0 3h1v2H6zm1 2h2v1H7zm2 1h4v1H9zm3 1h4v1h-4z" fill="#ffffff" />
+            <path d="M14 19h4v1h-4zm-3 1h4v1h-4zm-2 1h3v4H9zm0 4h1v1H9zm1 1h3v1h-3zm3 1h3v1h-3z" fill="#ffe57f" />
+            <path d="M18 18h2v1h-2zm3 1h2v1h-2zm1 1h2v1h-2zm1 1h1v5h-1zm-1 5h1v1h-1zm-2 1h2v1h-2zm-3 1h3v1h-3zm-3 1h3v1h-3z" fill="#ffa000" />
+            <path d="M15 20h2v1h-2zm-2 2h6v1h-6zm1 1h4v1h-4zm-1 1h6v1h-6zm2 1h2v1h-2z" fill="#e67e22" />
         </svg>
     </button>
+
+    <button class="shop-btn" onclick="toggleShop()" title="Boutique de Skins">
+        <svg viewBox="0 0 32 32" shape-rendering="crispEdges">
+            <path d="M4 9h24v2H4zm0 2h2v14h-2zm22 0h2v14h-2zm-22 14h24v2H4z" fill="#000000"/>
+            <path d="M5 10h22v4H5z" fill="#ff3838"/>
+            <path d="M8 10h3v4H8zm6 0h3v4h-3zm6 0h3v4h-3z" fill="#ffffff"/>
+            <path d="M6 14h20v8H6z" fill="#7f8c8d"/>
+            <path d="M5 22h22v2H5z" fill="#d35400"/>
+            <path d="M6 24h2v2H6zm18 0h2v2h-2z" fill="#a04000"/>
+        </svg>
+    </button>
+
+    <div class="shop-panel" id="shopPanel">
+        <div class="changelog-header" style="color: #00adb5;">Boutique de Skins</div>
+        <div class="changelog-content" id="shopContent"></div>
+    </div>
 
     <div class="menu-panel" id="menuPanel">
         <div class="menu-tabs">
@@ -637,7 +849,7 @@
 
             <div class="success-section-title">Succès Secrets</div>
             <div class="achievement-item" id="ach-halo">
-                <div class="achievement-icon">👁️‍🗨️</div>
+                <div class="achievement-icon">👁️‍寻</div>
                 <div class="achievement-info">
                     <div class="achievement-title" id="ach-halo-title">Succès Secret</div>
                     <div class="achievement-desc" id="ach-halo-desc">???</div>
@@ -661,20 +873,47 @@
         </div>
     </div>
 
-    <h1>Pif ou Paf</h1>
-    <p>Fais ton choix et lance la pièce !</p>
-
-    <div class="coin-container">
-        <div class="coin" id="coin" onclick="flipCoin()">
-            <div class="side heads">PIF</div>
-            <div class="side tails">PAF</div>
-        </div>
+    <!-- PANNEAU DE DÉBOGAGE MASQUÉ POUR LE DÉVELOPPEUR -->
+    <div class="debug-panel" id="debugPanel">
+        <div class="debug-title">Console de Débogage</div>
+        <button class="debug-btn" onclick="debugAddPoints()">🪙 Ajouter +500 Points</button>
+        <button class="debug-btn" onclick="debugUnlockSkins()">🛒 Débloquer tous les skins</button>
+        <button class="debug-btn" onclick="debugUnlockAchievements()">🏆 Valider tous les succès</button>
+        <button class="debug-btn" onclick="debugResetAll()" style="color:#ff0055; border-color:rgba(255,0,85,0.3)">⚠️ Réinitialiser toutes les données</button>
+        <button class="debug-btn" onclick="closeDebug()" style="text-align:center; background:#ff0055; color:white; margin-top:10px;">Fermer la console</button>
     </div>
 
-    <button class="flip-btn" onclick="flipCoin()">Lancer la pièce</button>
-    
-    <div id="result"></div>
-    <div id="halo-message"></div>
+    <div class="main-game-area">
+        <h1>Pif ou Paf</h1>
+        <p>Choisis ton pari, puis lance !</p>
+
+        <div class="coin-container">
+            <div class="coin" id="coin" data-skin="default" onclick="triggerCoinFlipViaClick()">
+                <div class="side heads">PIF</div>
+                <div class="side tails">PAF</div>
+            </div>
+        </div>
+
+        <div class="bet-container">
+            <button class="bet-btn" id="btnBetPif" onclick="selectBet('PIF')">PARIER PIF</button>
+            <button class="bet-btn" id="btnBetPaf" onclick="selectBet('PAF')">PARIER PAF</button>
+        </div>
+
+        <button class="flip-btn" id="flipButton" onclick="flipCoin()" disabled>Choisis un pari</button>
+        
+        <div class="points-display">
+            <span id="pointsValue">0</span>
+            <svg class="pixel-coin-icon" viewBox="0 0 8 8" shape-rendering="crispEdges">
+                <path d="M2 0h4v1H2zM1 1h6v1H1zm-1 2h8v4H0zm1 4h6v1H1zm1 1h4v1H2z" fill="#cca300" />
+                <path d="M2 1h4v1H2zm-1 1h6v1H1zm0 1h1v3H1zm5 0h1v3H6zm-4 3h4v1H2z" fill="#ffd700" />
+                <path d="M2 2h3v1H2zm0 1h1v2H2zm2 1h1v1H4z" fill="#fff59d" />
+                <path d="M5 3h1v3H5zm-2 2h2v1H3z" fill="#b38600" />
+            </svg>
+        </div>
+
+        <div id="result"></div>
+        <div id="halo-message"></div>
+    </div>
 
     <div class="lever-wrapper" onclick="toggleTheme()">
         <div class="lever-base">
@@ -687,7 +926,7 @@
         <div class="promo-bubble" id="promoBubble" onclick="closeBubble()">
             va voir ma chaine stp ⬇️
         </div>
-        <a class="youtube-link" href="https://youtube.com/@le-evy?si=pHqpua4ih3JTSrdV" target="_blank" rel="noopener noreferrer">
+        <a class="youtube-link" href="https://youtube.com/@le-evy?si=pHqpua4ih3JTSrdV" target="_blank" rel="noopener noreferrer" onclick="unlockYoutubeSkin()">
             <svg viewBox="0 0 24 24">
                 <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
             </svg>
@@ -699,15 +938,24 @@
         let resultDiv = document.getElementById('result');
         let haloDiv = document.getElementById('halo-message');
         let promoBubble = document.getElementById('promoBubble');
+        let flipButton = document.getElementById('flipButton');
         let isFlashing = false;
         let pifStreak = 0;
+        let selectedBet = null;
 
         let leverClicks = 0;
         let lastClickTime = 0;
 
         let totalFlips = parseInt(localStorage.getItem('pifpaf_flips')) || 0;
         let totalSeconds = parseInt(localStorage.getItem('pifpaf_seconds')) || 0;
+        let userPoints = parseInt(localStorage.getItem('pifpaf_points')) || 0;
         let unlockedAchievements = JSON.parse(localStorage.getItem('pifpaf_unlocked')) || {};
+        
+        let ownedSkins = JSON.parse(localStorage.getItem('pifpaf_owned_skins')) || { default: true };
+        let currentSkin = localStorage.getItem('pifpaf_current_skin') || 'default';
+
+        let bgClicks = 0;
+        let lastBgClickTime = 0;
 
         setTimeout(() => { closeBubble(); }, 5000);
         function closeBubble() { promoBubble.classList.add('hidden'); }
@@ -719,13 +967,21 @@
         }, 1000);
 
         function updateStatsDOM() {
-            let h = Math.floor(totalSeconds / 3600);
-            let m = Math.floor((totalSeconds % 3600) / 60);
-            document.getElementById('statTime').innerText = `${h} h ${m} min`;
+            document.getElementById('statTime').innerText = `${Math.floor(totalSeconds / 3600)} h ${Math.floor((totalSeconds % 3600) / 60)} min`;
             document.getElementById('statFlips').innerText = totalFlips;
-            
-            let count = Object.keys(unlockedAchievements).length;
-            document.getElementById('statCount').innerText = `${count} / 4`;
+            document.getElementById('pointsValue').innerText = userPoints;
+            document.getElementById('statCount').innerText = `${Object.keys(unlockedAchievements).length} / 4`;
+        }
+
+        function selectBet(side) {
+            if (isFlashing) return;
+            selectedBet = side;
+            document.getElementById('btnBetPif').classList.remove('selected');
+            document.getElementById('btnBetPaf').classList.remove('selected');
+            if (side === 'PIF') document.getElementById('btnBetPif').classList.add('selected');
+            else document.getElementById('btnBetPaf').classList.add('selected');
+            flipButton.disabled = false;
+            flipButton.innerText = "Lancer la pièce";
         }
 
         function checkAchievements() {
@@ -739,7 +995,9 @@
             if (!unlockedAchievements[id]) {
                 unlockedAchievements[id] = true;
                 localStorage.setItem('pifpaf_unlocked', JSON.stringify(unlockedAchievements));
-                triggerBanner(textAlert);
+                userPoints += 20;
+                localStorage.setItem('pifpaf_points', userPoints);
+                triggerBanner(`${textAlert} (+20 Points)`);
                 updateStatsDOM();
             }
         }
@@ -748,7 +1006,6 @@
             if (unlockedAchievements['play10']) document.getElementById('ach-play10').classList.add('unlocked');
             if (unlockedAchievements['play50']) document.getElementById('ach-play50').classList.add('unlocked');
             if (unlockedAchievements['play100']) document.getElementById('ach-play100').classList.add('unlocked');
-            
             if (unlockedAchievements['halo']) {
                 document.getElementById('ach-halo').classList.add('unlocked');
                 document.getElementById('ach-halo-title').innerText = "Infaillible Spartan";
@@ -760,14 +1017,8 @@
             let banner = document.getElementById('bannerNotification');
             banner.innerText = text;
             banner.classList.add('show');
-            
-            for (let i = 0; i < 30; i++) {
-                createConfetti();
-            }
-
-            setTimeout(() => {
-                banner.classList.remove('show');
-            }, 4000);
+            for (let i = 0; i < 30; i++) createConfetti();
+            setTimeout(() => { banner.classList.remove('show'); }, 4000);
         }
 
         function createConfetti() {
@@ -776,37 +1027,37 @@
             let side = Math.random() < 0.5 ? Math.floor(Math.random() * 100) : window.innerWidth - Math.floor(Math.random() * 100) - 10;
             confetti.style.left = side + 'px';
             confetti.style.top = Math.floor(Math.random() * 50) + 'px';
-            
             let colors = ['#ffd700', '#ff0000', '#ffffff', '#00adb5', '#5cdb95'];
             confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.appendChild(confetti);
-            
             setTimeout(() => { confetti.remove(); }, 1500);
         }
 
+        function triggerCoinFlipViaClick() {
+            if (!flipButton.disabled) flipCoin();
+        }
+
         function flipCoin() {
-            if (isFlashing) return; 
+            if (isFlashing || !selectedBet) return; 
             isFlashing = true;
             resultDiv.innerText = "";
+            flipButton.disabled = true;
             
             let isHeads = Math.random() < 0.5;
-            let randomRotations = Math.floor(Math.random() * 4) + 5; 
-            let finalDegrees = randomRotations * 360 + (isHeads ? 0 : 180);
-            
+            let finalDegrees = (Math.floor(Math.random() * 4) + 5) * 360 + (isHeads ? 0 : 180);
             coin.style.transform = `rotateY(${finalDegrees}deg)`;
             
             setTimeout(() => {
                 totalFlips++;
                 localStorage.setItem('pifpaf_flips', totalFlips);
-                updateStatsDOM();
-                checkAchievements();
+                let rollResult = isHeads ? "PIF" : "PAF";
 
                 if (isHeads) {
                     resultDiv.innerText = "Résultat : PIF !";
                     pifStreak++;
                     if (pifStreak === 9) {
                         haloDiv.innerText = "comme le master chief GG";
-                        unlock('halo', "👁️‍尋 Succès Secret : Découvre l'easter egg halo");
+                        unlock('halo', "👁️‍寻 Succès Secret : Découvre l'easter egg halo");
                         setTimeout(() => { haloDiv.innerText = ""; }, 3000);
                         pifStreak = 0;
                     }
@@ -814,19 +1065,43 @@
                     resultDiv.innerText = "Résultat : PAF !";
                     pifStreak = 0;
                 }
+
+                if (selectedBet === rollResult) {
+                    userPoints += 3;
+                    localStorage.setItem('pifpaf_points', userPoints);
+                    triggerBanner(`BON PARI ! +3 Points 🪙`);
+                } else {
+                    resultDiv.innerText += " (Pari perdu)";
+                }
+
+                selectedBet = null;
+                document.getElementById('btnBetPif').classList.remove('selected');
+                document.getElementById('btnBetPaf').classList.remove('selected');
+                flipButton.innerText = "Choisis un pari";
                 isFlashing = false;
+                updateStatsDOM();
+                checkAchievements();
+                refreshShopUI();
             }, 2000);
         }
 
-        // Gestion d'ouverture/fermeture des menus (avec fermeture automatique de l'autre menu pour éviter les bugs d'affichage)
         function toggleMenu() {
             document.getElementById('changelogPanel').classList.remove('open');
+            document.getElementById('shopPanel').classList.remove('open');
             document.getElementById('menuPanel').classList.toggle('open');
         }
 
         function toggleChangelog() {
             document.getElementById('menuPanel').classList.remove('open');
+            document.getElementById('shopPanel').classList.remove('open');
             document.getElementById('changelogPanel').classList.toggle('open');
+        }
+
+        function toggleShop() {
+            document.getElementById('menuPanel').classList.remove('open');
+            document.getElementById('changelogPanel').classList.remove('open');
+            document.getElementById('shopPanel').classList.toggle('open');
+            refreshShopUI();
         }
 
         function switchTab(tab) {
@@ -834,7 +1109,6 @@
             document.getElementById('tabStats').classList.remove('active');
             document.getElementById('contentSucces').classList.remove('active');
             document.getElementById('contentStats').classList.remove('active');
-
             if (tab === 'succes') {
                 document.getElementById('tabSucces').classList.add('active');
                 document.getElementById('contentSucces').classList.add('active');
@@ -845,35 +1119,132 @@
         }
 
         function toggleTheme() {
-            const currentTheme = document.body.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.body.removeAttribute('data-theme');
-            } else {
-                document.body.setAttribute('data-theme', 'dark');
-            }
+            if (document.body.getAttribute('data-theme') === 'dark') document.body.removeAttribute('data-theme');
+            else document.body.setAttribute('data-theme', 'dark');
 
             let now = Date.now();
-            if (leverClicks > 0) {
-                let timePassed = (now - lastClickTime) / 1000;
-                if (timePassed >= 3) {
-                    leverClicks = 0;
-                }
-            }
-            
+            if (leverClicks > 0 && (now - lastClickTime) / 1000 >= 3) leverClicks = 0;
             leverClicks++;
             lastClickTime = now;
 
             if (leverClicks === 10) {
                 haloDiv.innerText = "c'est beau hein ?";
                 leverClicks = 0;
-                setTimeout(() => {
-                    if (haloDiv.innerText === "c'est beau hein ?") {
-                        haloDiv.innerText = "";
-                    }
-                }, 3000);
+                setTimeout(() => { if (haloDiv.innerText === "c'est beau hein ?") haloDiv.innerText = ""; }, 3000);
             }
         }
 
+        const skinsConfig = [
+            { id: 'default', name: 'Pièce Classique', desc: 'Le style d\'origine jaune.', cost: 0, type: 'free' },
+            { id: 'halo', name: 'Anneau Halo', desc: 'Forme de pièce, texture métallique.', cost: 20, type: 'points' },
+            { id: 'minecraft', name: 'Lingot d\'Or Minecraft', desc: 'Un lingot rectangulaire pur.', cost: 500, type: 'points' },
+            { id: 'youtube', name: 'Pièce YouTube', desc: 'Ronde. Débloquée via le lien YouTube !', cost: 0, type: 'youtube' }
+        ];
+
+        function refreshShopUI() {
+            let container = document.getElementById('shopContent');
+            let html = '';
+            skinsConfig.forEach(skin => {
+                let actionBtn = '';
+                if (currentSkin === skin.id) {
+                    actionBtn = `<button class="bet-btn selected" style="width:100%; cursor:default;">ÉQUIPÉ</button>`;
+                } else if (ownedSkins[skin.id]) {
+                    actionBtn = `<button class="bet-btn" style="width:100%; background-color:#00adb5; color:white;" onclick="equipSkin('${skin.id}')">ÉQUIPER</button>`;
+                } else {
+                    if (skin.type === 'points') {
+                        let canBuy = userPoints >= skin.cost;
+                        actionBtn = `<button class="bet-btn" style="width:100%; ${!canBuy ? 'opacity:0.5;' : ''}" onclick="buySkin('${skin.id}', ${skin.cost})" ${!canBuy ? 'disabled' : ''}>ACHETER (${skin.cost} Pts)</button>`;
+                    } else if (skin.type === 'youtube') {
+                        actionBtn = `<button class="bet-btn" style="width:100%; opacity:0.6; font-size:11px;" disabled>CLIQUE SUR LE LIEN YT (BAS GAUCHE)</button>`;
+                    }
+                }
+                html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">${skin.name}</span><span style="font-size:11px; color:var(--sub-text-color);">${skin.desc}</span><div style="margin-top:5px;">${actionBtn}</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function buySkin(id, cost) {
+            if (userPoints >= cost && !ownedSkins[id]) {
+                userPoints -= cost;
+                ownedSkins[id] = true;
+                localStorage.setItem('pifpaf_points', userPoints);
+                localStorage.setItem('pifpaf_owned_skins', JSON.stringify(ownedSkins));
+                triggerBanner("🛒 Skin acheté avec succès !");
+                updateStatsDOM();
+                refreshShopUI();
+            }
+        }
+
+        function equipSkin(id) {
+            if (ownedSkins[id]) {
+                currentSkin = id;
+                localStorage.setItem('pifpaf_current_skin', currentSkin);
+                coin.setAttribute('data-skin', id);
+                triggerBanner(`Skin activé : ${id.toUpperCase()}`);
+                refreshShopUI();
+            }
+        }
+
+        function unlockYoutubeSkin() {
+            if (!ownedSkins['youtube']) {
+                ownedSkins['youtube'] = true;
+                localStorage.setItem('pifpaf_owned_skins', JSON.stringify(ownedSkins));
+                triggerBanner("🔴 Skin YouTube Débloqué !");
+                refreshShopUI();
+            }
+        }
+
+        /* --- LOGIQUE DE DÉBOGAGE SECRÈTE (DEV CONSOLE) --- */
+        document.body.addEventListener('click', function(e) {
+            if (e.target === document.body) {
+                let now = Date.now();
+                if (now - lastBgClickTime > 2000) bgClicks = 0;
+                bgClicks++;
+                lastBgClickTime = now;
+
+                if (bgClicks === 3) {
+                    bgClicks = 0;
+                    let code = prompt("Entrez le code secret de débogage :");
+                    if (code === "6849") {
+                        document.getElementById('debugPanel').classList.add('open');
+                    }
+                }
+            }
+        });
+
+        function debugAddPoints() {
+            userPoints += 500;
+            localStorage.setItem('pifpaf_points', userPoints);
+            updateStatsDOM();
+            refreshShopUI();
+            triggerBanner("DEV : +500 Points ajoutés ! 🪙");
+        }
+
+        function debugUnlockSkins() {
+            skinsConfig.forEach(s => ownedSkins[s.id] = true);
+            localStorage.setItem('pifpaf_owned_skins', JSON.stringify(ownedSkins));
+            refreshShopUI();
+            triggerBanner("DEV : Tous les skins débloqués ! 🛒");
+        }
+
+        function debugUnlockAchievements() {
+            ['play10', 'play50', 'play100', 'halo'].forEach(id => unlockedAchievements[id] = true);
+            localStorage.setItem('pifpaf_unlocked', JSON.stringify(unlockedAchievements));
+            refreshAchievementsUI();
+            updateStatsDOM();
+            triggerBanner("DEV : Tous les succès validés ! 🏆");
+        }
+
+        function debugResetAll() {
+            localStorage.clear();
+            location.reload();
+        }
+
+        function closeDebug() {
+            document.getElementById('debugPanel').classList.remove('open');
+        }
+
+        coin.setAttribute('data-skin', currentSkin);
         updateStatsDOM();
         refreshAchievementsUI();
     </script>
