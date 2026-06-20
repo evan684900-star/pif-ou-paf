@@ -112,7 +112,7 @@
             transform: rotateY(180deg);
         }
 
-        /* --- STYLES DES SKINS DYNAMIQUES --- */
+        /* --- SKINS --- */
         .coin[data-skin="minecraft"] .side {
             border-radius: 12px !important;
             border: 4px solid #b78727 !important;
@@ -138,14 +138,11 @@
         .coin[data-skin="youtube"] .side::before {
             content: '';
             position: absolute;
-            width: 0;
-            height: 0;
+            width: 0; height: 0;
             border-top: 12px solid transparent;
             border-bottom: 12px solid transparent;
             border-left: 20px solid rgba(255, 255, 255, 0.6);
-            z-index: 0;
-            top: 50%;
-            left: 52%;
+            z-index: 0; top: 50%; left: 52%;
             transform: translate(-50%, -50%);
         }
 
@@ -195,14 +192,6 @@
             box-shadow: none;
         }
 
-        .flip-btn:hover:not(:disabled) {
-            background-color: #008c95;
-        }
-
-        .flip-btn:active:not(:disabled) {
-            transform: scale(0.95);
-        }
-
         .points-display {
             margin-top: 20px;
             font-family: monospace;
@@ -213,14 +202,9 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: color 0.3s;
         }
 
-        .pixel-coin-icon {
-            width: 20px;
-            height: 20px;
-            display: block;
-        }
+        .pixel-coin-icon { width: 20px; height: 20px; display: block; }
 
         #result {
             margin-top: 20px;
@@ -228,7 +212,6 @@
             font-weight: bold;
             min-height: 40px;
             color: #f8c216;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         #halo-message {
@@ -236,496 +219,119 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: #5cdb95;
-            text-shadow: 0 0 10px rgba(92, 219, 149, 0.5);
             min-height: 35px;
         }
 
-        .version-btn {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            background: none;
-            border: none;
-            font-family: monospace;
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--text-color);
-            cursor: pointer;
-            z-index: 100;
-            opacity: 0.7;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-
-        .version-btn:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .changelog-panel {
-            position: fixed;
-            top: 85px;
-            left: 25px;
-            width: 330px;
-            height: 450px;
-            background-color: var(--menu-bg);
-            border: 4px solid var(--menu-border);
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
-            z-index: 99;
-            display: flex;
-            flex-direction: column;
-            font-family: monospace;
-            transform: scale(0);
-            transform-origin: top left;
-            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .changelog-panel.open {
-            transform: scale(1);
-        }
-
-        .changelog-header {
-            padding: 12px;
-            font-weight: bold;
-            font-size: 14px;
-            text-transform: uppercase;
-            text-align: center;
-            border-bottom: 4px solid var(--menu-border);
-            background-color: rgba(0,0,0,0.05);
-            color: #00adb5;
-        }
-
-        [data-theme="dark"] .changelog-header {
-            background-color: rgba(255,255,255,0.05);
-        }
-
-        .changelog-content {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .version-block {
-            margin-bottom: 20px;
-        }
-
-        .version-block:last-child {
-            margin-bottom: 5px;
-        }
-
-        .version-title {
-            font-weight: bold;
-            font-size: 13px;
-            color: #f8c216;
-            margin-bottom: 6px;
-        }
-
-        .version-list {
-            margin: 0;
-            padding-left: 15px;
-            font-size: 11px;
-            color: var(--text-color);
-            line-height: 1.5;
-        }
-
-        .medal-btn {
-            position: fixed;
-            top: 20px;
-            right: 105px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 100;
-            transition: transform 0.2s;
-            padding: 0;
-        }
-
-        .medal-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .medal-btn svg {
-            width: 64px;
-            height: 64px;
-            display: block;
-        }
-
-        .shop-btn {
-            position: fixed;
-            top: 20px;
-            right: 25px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 100;
-            transition: transform 0.2s;
-            padding: 0;
-        }
-
-        .shop-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .shop-btn svg {
-            width: 64px;
-            height: 64px;
-            display: block;
-        }
-
-        .menu-panel, .shop-panel {
-            position: fixed;
-            top: 90px;
-            right: 25px;
-            width: 320px;
-            height: 400px;
-            background-color: var(--menu-bg);
-            border: 4px solid var(--menu-border);
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
-            z-index: 99;
-            display: flex;
-            flex-direction: column;
-            font-family: monospace;
-            transform: scale(0);
-            transform-origin: top right;
-            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .menu-panel.open, .shop-panel.open {
-            transform: scale(1);
-        }
-
-        .menu-tabs {
-            display: flex;
-            border-bottom: 4px solid var(--menu-border);
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 10px;
-            background: none;
-            border: none;
-            font-family: monospace;
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--text-color);
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .tab-btn.active {
-            background-color: var(--menu-border);
-            color: var(--menu-bg);
-        }
-
-        .tab-content {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .success-section-title {
-            font-size: 13px;
-            margin: 15px 0 8px 0;
-            color: #00adb5;
-            text-transform: uppercase;
-            border-bottom: 1px dashed var(--sub-text-color);
-            padding-bottom: 2px;
-        }
-
-        .success-section-title:first-child {
-            margin-top: 0;
-        }
-
-        .achievement-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(0,0,0,0.05);
-            padding: 8px;
-            margin-bottom: 8px;
-            border: 2px solid var(--sub-text-color);
-            opacity: 0.3;
-            transition: opacity 0.3s, border-color 0.3s;
-        }
-
-        [data-theme="dark"] .achievement-item {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .achievement-item.unlocked {
-            opacity: 1;
-            border-color: #f8c216;
-            background: rgba(248, 194, 22, 0.1);
-        }
-
-        .achievement-icon {
-            font-size: 20px;
-        }
-
-        .achievement-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .achievement-title {
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        .achievement-desc {
-            font-size: 10px;
-            color: var(--sub-text-color);
-        }
-
-        .stat-line {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            font-size: 12px;
-        }
-
-        [data-theme="dark"] .stat-line {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .stat-line span:last-child {
-            font-weight: bold;
-            color: #00adb5;
-        }
-
-        .banner-notification {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #d11a2a;
-            color: #ffffff;
-            border: 4px solid #ffd700;
-            padding: 12px 30px;
-            font-family: monospace;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 1000;
-            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            white-space: nowrap;
-        }
-
-        .banner-notification.show {
-            top: 25px;
-        }
-
-        .confetti {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            z-index: 999;
-            pointer-events: none;
-            animation: fall 1.5s linear forwards;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
-        }
-
-        .lever-wrapper {
-            position: fixed;
-            bottom: 30px;
-            right: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .lever-base {
-            width: 56px;
-            height: 56px;
-            background-color: #737373;
-            border: 6px solid #4a4a4a;
-            box-shadow: inset -6px -6px 0px #313131, inset 6px 6px 0px #9c9c9c, 0 6px 10px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 1;
-        }
-
-        .lever-stick {
-            width: 14px;
-            height: 70px;
-            background-color: #866043;
-            border-left: 4px solid #b38965;
-            border-right: 4px solid #573d26;
-            position: absolute;
-            bottom: 28px;
-            left: 21px;
-            z-index: 2;
-            transform-origin: bottom center;
-            transform: rotate(-35deg);
-            transition: transform 0.15s steps(4);
-        }
-
-        .lever-stick::before {
-            content: '';
-            position: absolute;
-            top: -12px;
-            left: -4px;
-            width: 14px;
-            height: 12px;
-            background-color: #4a4a4a;
-            border: 4px solid #1a1a1a;
-        }
-
-        [data-theme="dark"] .lever-stick {
-            transform: rotate(35deg);
-        }
-
-        .lever-label {
-            margin-top: 10px;
-            font-size: 11px;
-            font-family: monospace;
-            font-weight: bold;
-            color: var(--sub-text-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .youtube-container {
-            position: fixed;
-            bottom: 35px;
-            left: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            z-index: 10;
-        }
-
-        .youtube-link {
-            display: block;
-            transition: transform 0.2s;
-        }
-
-        .youtube-link:hover {
-            transform: scale(1.1);
-        }
-
-        .youtube-link svg {
-            width: 55px;
-            height: 55px;
-            fill: var(--yt-color);
-            transition: fill 0.3s;
-        }
-
-        .promo-bubble {
-            background-color: var(--bubble-bg);
-            color: var(--bubble-text);
-            padding: 10px 14px;
-            font-family: monospace;
-            font-size: 12px;
-            font-weight: bold;
-            border: 3px solid var(--dot-color);
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.15);
-            margin-bottom: 15px;
-            position: relative;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: opacity 0.4s, transform 0.4s;
-            animation: bounce 1s infinite alternate;
-        }
-
-        .promo-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -11px;
-            left: 20px;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 8px solid var(--dot-color);
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-6px); }
-        }
-
-        .hidden {
-            opacity: 0;
-            transform: translateY(10px);
-            pointer-events: none;
-        }
-
-        .shop-item {
-            background: rgba(0,0,0,0.03);
-            border: 2px solid var(--menu-border);
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        [data-theme="dark"] .shop-item {
-            background: rgba(255,255,255,0.03);
-        }
-
-        /* --- INTERFACE DE DÉBOGAGE INTERNE (INVISIBLE) --- */
-        .debug-panel {
+        /* --- COMTES / COMBOS TEXT EFFECT --- */
+        .combo-overlay {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 290px;
-            background-color: var(--menu-bg);
-            border: 4px solid #ff0055;
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
-            z-index: 10000;
-            font-family: monospace;
-            padding: 15px;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .debug-panel.open {
-            transform: translate(-50%, -50%) scale(1);
-        }
-        .debug-title {
-            color: #ff0055;
-            font-weight: bold;
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 15px;
+            transform: translate(-50%, -50%) scale(0.5);
+            font-size: 5rem;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 4px 4px 0px #000;
+            z-index: 500;
+            pointer-events: none;
+            opacity: 0;
             text-transform: uppercase;
-            border-bottom: 2px dashed #ff0055;
-            padding-bottom: 5px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
         }
-        .debug-btn {
-            width: 100%;
-            background: none;
-            border: 2px solid var(--menu-border);
-            color: var(--text-color);
-            padding: 10px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            font-family: monospace;
-            font-weight: bold;
-            font-size: 12px;
-            text-align: left;
-            transition: background-color 0.1s;
+
+        .combo-overlay.animate {
+            animation: comboPopFade 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
-        .debug-btn:hover {
-            background-color: rgba(255, 0, 85, 0.1);
-            border-color: #ff0055;
+
+        @keyframes comboPopFade {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            40% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -120%) scale(0.9); opacity: 0; }
         }
+
+        .version-btn {
+            position: fixed; top: 25px; left: 25px; background: none; border: none;
+            font-family: monospace; font-size: 16px; font-weight: bold; color: var(--text-color);
+            cursor: pointer; z-index: 100; opacity: 0.7;
+        }
+
+        .changelog-panel {
+            position: fixed; top: 85px; left: 25px; width: 330px; height: 450px;
+            background-color: var(--menu-bg); border: 4px solid var(--menu-border);
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.2); z-index: 99; display: flex;
+            flex-direction: column; font-family: monospace; transform: scale(0);
+            transform-origin: top left; transition: transform 0.25s;
+        }
+
+        .changelog-panel.open { transform: scale(1); }
+        .changelog-header { padding: 12px; font-weight: bold; text-align: center; border-bottom: 4px solid var(--menu-border); color: #00adb5; }
+        .changelog-content { flex: 1; padding: 15px; overflow-y: auto; }
+        .version-block { margin-bottom: 20px; }
+        .version-title { font-weight: bold; color: #f8c216; margin-bottom: 6px; }
+        .version-list { margin: 0; padding-left: 15px; font-size: 11px; line-height: 1.5; }
+
+        .medal-btn { position: fixed; top: 20px; right: 105px; background: none; border: none; cursor: pointer; z-index: 100; }
+        .shop-btn { position: fixed; top: 20px; right: 25px; background: none; border: none; cursor: pointer; z-index: 100; }
+        .medal-btn svg, .shop-btn svg { width: 64px; height: 64px; display: block; }
+
+        .menu-panel, .shop-panel {
+            position: fixed; top: 90px; right: 25px; width: 320px; height: 400px;
+            background-color: var(--menu-bg); border: 4px solid var(--menu-border);
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.2); z-index: 99; display: flex;
+            flex-direction: column; font-family: monospace; transform: scale(0);
+            transform-origin: top right; transition: transform 0.25s;
+        }
+        .menu-panel.open, .shop-panel.open { transform: scale(1); }
+
+        .menu-tabs { display: flex; border-bottom: 4px solid var(--menu-border); }
+        .tab-btn { flex: 1; padding: 10px; background: none; border: none; font-family: monospace; font-weight: bold; color: var(--text-color); cursor: pointer; }
+        .tab-btn.active { background-color: var(--menu-border); color: var(--menu-bg); }
+        .tab-content { flex: 1; padding: 15px; overflow-y: auto; display: none; }
+        .tab-content.active { display: block; }
+
+        .success-section-title { font-size: 13px; margin: 15px 0 8px 0; color: #00adb5; text-transform: uppercase; border-bottom: 1px dashed var(--sub-text-color); }
+        .achievement-item { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.05); padding: 8px; margin-bottom: 8px; border: 2px solid var(--sub-text-color); opacity: 0.3; }
+        .achievement-item.unlocked { opacity: 1; border-color: #f8c216; background: rgba(248, 194, 22, 0.1); }
+        .achievement-info { display: flex; flex-direction: column; }
+        .achievement-title { font-weight: bold; font-size: 12px; }
+        .achievement-desc { font-size: 10px; color: var(--sub-text-color); }
+
+        .stat-line { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.1); font-size: 12px; }
+        .stat-line span:last-child { font-weight: bold; color: #00adb5; }
+
+        .banner-notification {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background-color: #d11a2a; color: #ffffff; border: 4px solid #ffd700;
+            padding: 12px 30px; font-family: monospace; font-size: 14px; font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; transition: top 0.5s;
+        }
+        .banner-notification.show { top: 25px; }
+
+        .confetti { position: fixed; width: 8px; height: 8px; z-index: 999; pointer-events: none; animation: fall 1.5s linear forwards; }
+        @keyframes fall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(200px) rotate(360deg); opacity: 0; } }
+
+        .lever-wrapper { position: fixed; bottom: 30px; right: 40px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .lever-base { width: 56px; height: 56px; background-color: #737373; border: 6px solid #4a4a4a; position: relative; z-index: 1; }
+        .lever-stick { width: 14px; height: 70px; background-color: #866043; position: absolute; bottom: 28px; left: 21px; z-index: 2; transform-origin: bottom center; transform: rotate(-35deg); transition: transform 0.15s steps(4); }
+        [data-theme="dark"] .lever-stick { transform: rotate(35deg); }
+        .lever-label { margin-top: 10px; font-size: 11px; font-family: monospace; font-weight: bold; color: var(--sub-text-color); }
+
+        .youtube-container { position: fixed; bottom: 35px; left: 40px; display: flex; flex-direction: column; z-index: 10; }
+        .youtube-link svg { width: 55px; height: 55px; fill: var(--yt-color); }
+        .promo-bubble { background-color: var(--bubble-bg); color: var(--bubble-text); padding: 10px 14px; font-family: monospace; font-size: 12px; font-weight: bold; border: 3px solid var(--dot-color); margin-bottom: 15px; position: relative; white-space: nowrap; }
+        .promo-bubble.hidden { opacity: 0; pointer-events: none; }
+
+        .shop-item { background: rgba(0,0,0,0.03); border: 2px solid var(--menu-border); padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 5px; }
+        .debug-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 290px; background-color: var(--menu-bg); border: 4px solid #ff0055; z-index: 10000; font-family: monospace; padding: 15px; transition: transform 0.2s; }
+        .debug-panel.open { transform: translate(-50%, -50%) scale(1); }
+        .debug-btn { width: 100%; background: none; border: 2px solid var(--menu-border); color: var(--text-color); padding: 10px; margin-bottom: 8px; cursor: pointer; font-family: monospace; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="banner-notification" id="bannerNotification">SUCCÈS DÉBLOQUÉ !</div>
+    <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
     <button class="version-btn" onclick="toggleChangelog()">v4.2.1</button>
 
@@ -733,9 +339,9 @@
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
             <div class="version-block">
-                <div class="version-title">v4.2.1 - Télémétrie</div>
+                <div class="version-title">v4.2.1 - Système de Combos</div>
                 <ul class="version-list">
-                    <li>Intégration du script de suivi Vercel Web Analytics Insights.</li>
+                    <li>Ajout des multiplicateurs de combos textuels jaunes au centre de l'écran avec fondu.</li>
                 </ul>
             </div>
             <div class="version-block">
@@ -745,46 +351,12 @@
                     <li>Skin Lingot d'Or Minecraft disponible pour 500 points.</li>
                     <li>Skin Anneau de Halo disponible pour 20 points.</li>
                     <li>Skin Pièce YouTube à débloquer en cliquant sur le lien YouTube.</li>
-                    <li>Correction de l'affichage de version figé.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v4.1.3 - Correction de la Médaille SVG</div>
-                <ul class="version-list">
-                    <li>Correction complète des chemins SVG pour supprimer les déformations de l'icône de succès.</li>
-                    <li>Alignement précis en pixel art sur une grille propre de 32x32.</li>
                 </ul>
             </div>
             <div class="version-block">
                 <div class="version-title">v4.0.0 - Refonte Graphique Majeure</div>
                 <ul class="version-list">
-                    <li>Mise en place de l'arrière-plan interactif en grille de points.</li>
-                    <li>Ajout du levier mécanique pour alterner les thèmes Clair et Sombre.</li>
-                    <li>Optimisation des performances graphiques et des transitions css.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v3.0.0 - Système de Paris & Devise</div>
-                <ul class="version-list">
-                    <li>Introduction du système de score et intégration de la monnaie (Points).</li>
-                    <li>Boutons de choix de pari exclusifs entre PIF et PAF.</li>
-                    <li>Gain de +3 Points en cas de prédiction correcte.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v2.0.0 - Menu Statistiques et Succès</div>
-                <ul class="version-list">
-                    <li>Création de l'icône Médaille ouvrant les panneaux de suivi de progression.</li>
-                    <li>Suivi en direct du temps d'activité global passé sur l'application.</li>
-                    <li>Déploiement des succès progressifs (10, 50 et 100 lancers).</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v1.0.0 - Lancement Officiel</div>
-                <ul class="version-list">
-                    <li>Lancement du noyau algorithmique de la pièce Pif ou Paf.</li>
-                    <li>Intégration de la physique 3D CSS de retournement aléatoire de la pièce.</li>
-                    <li>Interface utilisateur de base adaptative.</li>
+                    <li>Mise en place de l'arrière-plan interactif en grille de points et levier mécanique.</li>
                 </ul>
             </div>
         </div>
@@ -802,8 +374,6 @@
             <path d="M12 18h8v1h-8zm-3 1h14v1H9zm-2 1h16v1H7zm-1 1h18v6H6zm1 6h16v1H7zm2 1h14v1H9zm3 1h8v1h-8z" fill="#ffcc00" />
             <path d="M12 18h6v1h-6zm-3 1h5v1H9zm-2 1h4v1H7zm-1 1h3v3H6zm0 3h1v2H6zm1 2h2v1H7zm2 1h4v1H9zm3 1h4v1h-4z" fill="#ffffff" />
             <path d="M14 19h4v1h-4zm-3 1h4v1h-4zm-2 1h3v4H9zm0 4h1v1H9zm1 1h3v1h-3zm3 1h3v1h-3z" fill="#ffe57f" />
-            <path d="M18 18h2v1h-2zm3 1h2v1h-2zm1 1h2v1h-2zm1 1h1v5h-1zm-1 5h1v1h-1zm-2 1h2v1h-2zm-3 1h3v1h-3zm-3 1h3v1h-3z" fill="#ffa000" />
-            <path d="M15 20h2v1h-2zm-2 2h6v1h-6zm1 1h4v1h-4zm-1 1h6v1h-6zm2 1h2v1h-2z" fill="#e67e22" />
         </svg>
     </button>
 
@@ -813,13 +383,11 @@
             <path d="M5 10h22v4H5z" fill="#ff3838"/>
             <path d="M8 10h3v4H8zm6 0h3v4h-3zm6 0h3v4h-3z" fill="#ffffff"/>
             <path d="M6 14h20v8H6z" fill="#7f8c8d"/>
-            <path d="M5 22h22v2H5z" fill="#d35400"/>
-            <path d="M6 24h2v2H6zm18 0h2v2h-2z" fill="#a04000"/>
         </svg>
     </button>
 
     <div class="shop-panel" id="shopPanel">
-        <div class="changelog-header" style="color: #00adb5;">Boutique de Skins</div>
+        <div class="changelog-header">Boutique de Skins</div>
         <div class="changelog-content" id="shopContent"></div>
     </div>
 
@@ -831,62 +399,27 @@
         
         <div class="tab-content active" id="contentSucces">
             <div class="success-section-title">Succès Normaux</div>
-            <div class="achievement-item" id="ach-play10">
-                <div class="achievement-icon">🥉</div>
-                <div class="achievement-info">
-                    <div class="achievement-title">Premiers pas</div>
-                    <div class="achievement-desc">Jouer 10 fois</div>
-                </div>
-            </div>
-            <div class="achievement-item" id="ach-play50">
-                <div class="achievement-icon">🥈</div>
-                <div class="achievement-info">
-                    <div class="achievement-title">Habitué</div>
-                    <div class="achievement-desc">Jouer 50 fois</div>
-                </div>
-            </div>
-            <div class="achievement-item" id="ach-play100">
-                <div class="achievement-icon">🥇</div>
-                <div class="achievement-info">
-                    <div class="achievement-title">Légende du Pif</div>
-                    <div class="achievement-desc">Jouer 100 fois</div>
-                </div>
-            </div>
-
+            <div class="achievement-item" id="ach-play10"><div class="achievement-info"><div class="achievement-title">🥉 Premiers pas</div><div class="achievement-desc">Jouer 10 fois</div></div></div>
+            <div class="achievement-item" id="ach-play50"><div class="achievement-info"><div class="achievement-title">🥈 Habitué</div><div class="achievement-desc">Jouer 50 fois</div></div></div>
+            <div class="achievement-item" id="ach-play100"><div class="achievement-info"><div class="achievement-title">🥇 Légende du Pif</div><div class="achievement-desc">Jouer 100 fois</div></div></div>
             <div class="success-section-title">Succès Secrets</div>
-            <div class="achievement-item" id="ach-halo">
-                <div class="achievement-icon">👁️‍寻</div>
-                <div class="achievement-info">
-                    <div class="achievement-title" id="ach-halo-title">Succès Secret</div>
-                    <div class="achievement-desc" id="ach-halo-desc">???</div>
-                </div>
-            </div>
+            <div class="achievement-item" id="ach-halo"><div class="achievement-info"><div class="achievement-title" id="ach-halo-title">Succès Secret</div><div class="achievement-desc" id="ach-halo-desc">???</div></div></div>
         </div>
 
         <div class="tab-content" id="contentStats">
-            <div class="stat-line">
-                <span>Temps sur le site :</span>
-                <span id="statTime">0 h 0 min</span>
-            </div>
-            <div class="stat-line">
-                <span>Lancers de pièce :</span>
-                <span id="statFlips">0</span>
-            </div>
-            <div class="stat-line">
-                <span>Succès débloqués :</span>
-                <span id="statCount">0 / 4</span>
-            </div>
+            <div class="stat-line"><span>Temps sur le site :</span><span id="statTime">0 h 0 min</span></div>
+            <div class="stat-line"><span>Lancers de pièce :</span><span id="statFlips">0</span></div>
+            <div class="stat-line"><span>Série de victoires (Combo Max) :</span><span id="statMaxCombo">0</span></div>
+            <div class="stat-line"><span>Succès débloqués :</span><span id="statCount">0 / 4</span></div>
         </div>
     </div>
 
-    <!-- PANNEAU DE DÉBOGAGE MASQUÉ POUR LE DÉVELOPPEUR -->
     <div class="debug-panel" id="debugPanel">
         <div class="debug-title">Console de Débogage</div>
         <button class="debug-btn" onclick="debugAddPoints()">🪙 Ajouter +500 Points</button>
         <button class="debug-btn" onclick="debugUnlockSkins()">🛒 Débloquer tous les skins</button>
-        <button class="debug-btn" onclick="debugUnlockAchievements()">🏆 Valider tous les succès</button>
-        <button class="debug-btn" onclick="debugResetAll()" style="color:#ff0055; border-color:rgba(255,0,85,0.3)">⚠️ Réinitialiser toutes les données</button>
-        <button class="debug-btn" onclick="closeDebug()" style="text-align:center; background:#ff0055; color:white; margin-top:10px;">Fermer la console</button>
+        <button class="debug-btn" onclick="debugResetAll()">⚠️ Réinitialiser tout</button>
+        <button class="debug-btn" onclick="closeDebug()" style="background:#ff0055; color:white;">Fermer</button>
     </div>
 
     <div class="main-game-area">
@@ -912,8 +445,6 @@
             <svg class="pixel-coin-icon" viewBox="0 0 8 8" shape-rendering="crispEdges">
                 <path d="M2 0h4v1H2zM1 1h6v1H1zm-1 2h8v4H0zm1 4h6v1H1zm1 1h4v1H2z" fill="#cca300" />
                 <path d="M2 1h4v1H2zm-1 1h6v1H1zm0 1h1v3H1zm5 0h1v3H6zm-4 3h4v1H2z" fill="#ffd700" />
-                <path d="M2 2h3v1H2zm0 1h1v2H2zm2 1h1v1H4z" fill="#fff59d" />
-                <path d="M5 3h1v3H5zm-2 2h2v1H3z" fill="#b38600" />
             </svg>
         </div>
 
@@ -922,20 +453,14 @@
     </div>
 
     <div class="lever-wrapper" onclick="toggleTheme()">
-        <div class="lever-base">
-            <div class="lever-stick" id="leverStick"></div>
-        </div>
+        <div class="lever-base"><div class="lever-stick" id="leverStick"></div></div>
         <div class="lever-label">Mode</div>
     </div>
 
     <div class="youtube-container">
-        <div class="promo-bubble" id="promoBubble" onclick="closeBubble()">
-            va voir ma chaine stp ⬇️
-        </div>
+        <div class="promo-bubble" id="promoBubble" onclick="closeBubble()">va voir ma chaine stp ⬇️</div>
         <a class="youtube-link" href="https://youtube.com/@le-evy?si=pHqpua4ih3JTSrdV" target="_blank" rel="noopener noreferrer" onclick="unlockYoutubeSkin()">
-            <svg viewBox="0 0 24 24">
-                <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </a>
     </div>
 
@@ -945,23 +470,22 @@
         let haloDiv = document.getElementById('halo-message');
         let promoBubble = document.getElementById('promoBubble');
         let flipButton = document.getElementById('flipButton');
+        let comboOverlay = document.getElementById('comboOverlay');
+        
         let isFlashing = false;
-        let pifStreak = 0;
+        let pifStreak = 0; // Pour l'easter egg Halo
+        let currentCombo = 0; // Système de combos global
+        let maxCombo = parseInt(localStorage.getItem('pifpaf_max_combo')) || 0;
         let selectedBet = null;
 
-        let leverClicks = 0;
-        let lastClickTime = 0;
-
+        let leverClicks = 0; let lastClickTime = 0;
         let totalFlips = parseInt(localStorage.getItem('pifpaf_flips')) || 0;
         let totalSeconds = parseInt(localStorage.getItem('pifpaf_seconds')) || 0;
         let userPoints = parseInt(localStorage.getItem('pifpaf_points')) || 0;
         let unlockedAchievements = JSON.parse(localStorage.getItem('pifpaf_unlocked')) || {};
-        
         let ownedSkins = JSON.parse(localStorage.getItem('pifpaf_owned_skins')) || { default: true };
         let currentSkin = localStorage.getItem('pifpaf_current_skin') || 'default';
-
-        let bgClicks = 0;
-        let lastBgClickTime = 0;
+        let bgClicks = 0; let lastBgClickTime = 0;
 
         setTimeout(() => { closeBubble(); }, 5000);
         function closeBubble() { promoBubble.classList.add('hidden'); }
@@ -975,6 +499,7 @@
         function updateStatsDOM() {
             document.getElementById('statTime').innerText = `${Math.floor(totalSeconds / 3600)} h ${Math.floor((totalSeconds % 3600) / 60)} min`;
             document.getElementById('statFlips').innerText = totalFlips;
+            document.getElementById('statMaxCombo').innerText = maxCombo;
             document.getElementById('pointsValue').innerText = userPoints;
             document.getElementById('statCount').innerText = `${Object.keys(unlockedAchievements).length} / 4`;
         }
@@ -988,6 +513,77 @@
             else document.getElementById('btnBetPaf').classList.add('selected');
             flipButton.disabled = false;
             flipButton.innerText = "Lancer la pièce";
+        }
+
+        function triggerComboVisual(comboCount) {
+            comboOverlay.innerText = `COMBO X${comboCount} !`;
+            comboOverlay.classList.remove('animate');
+            void comboOverlay.offsetWidth; // Force le reflow CSS pour relancer l'animation
+            comboOverlay.classList.add('animate');
+        }
+
+        function flipCoin() {
+            if (isFlashing || !selectedBet) return; 
+            isFlashing = true;
+            resultDiv.innerText = "";
+            flipButton.disabled = true;
+            
+            let isHeads = Math.random() < 0.5;
+            let finalDegrees = (Math.floor(Math.random() * 4) + 5) * 360 + (isHeads ? 0 : 180);
+            coin.style.transform = `rotateY(${finalDegrees}deg)`;
+            
+            setTimeout(() => {
+                totalFlips++;
+                localStorage.setItem('pifpaf_flips', totalFlips);
+                let rollResult = isHeads ? "PIF" : "PAF";
+
+                // Gestion de l'easter egg Halo (9 PIF d'affilée)
+                if (isHeads) {
+                    resultDiv.innerText = "Résultat : PIF !";
+                    pifStreak++;
+                    if (pifStreak === 9) {
+                        haloDiv.innerText = "comme le master chief GG";
+                        unlock('halo', "👁️‍寻 Succès Secret : Découvre l'easter egg halo");
+                        setTimeout(() => { haloDiv.innerText = ""; }, 3000);
+                        pifStreak = 0;
+                    }
+                } else {
+                    resultDiv.innerText = "Résultat : PAF !";
+                    pifStreak = 0;
+                }
+
+                // Vérification du pari pour les Combos
+                if (selectedBet === rollResult) {
+                    currentCombo++;
+                    if (currentCombo > maxCombo) {
+                        maxCombo = currentCombo;
+                        localStorage.setItem('pifpaf_max_combo', maxCombo);
+                    }
+
+                    // Calcul des points bonus par combo
+                    let pointsGagnes = 3 * currentCombo;
+                    userPoints += pointsGagnes;
+                    localStorage.setItem('pifpaf_points', userPoints);
+
+                    if (currentCombo >= 2) {
+                        triggerComboVisual(currentCombo);
+                    } else {
+                        triggerBanner(`BON PARI ! +3 Points 🪙`);
+                    }
+                } else {
+                    resultDiv.innerText += " (Pari perdu)";
+                    currentCombo = 0; // Le combo retombe à 0 en cas d'échec
+                }
+
+                selectedBet = null;
+                document.getElementById('btnBetPif').classList.remove('selected');
+                document.getElementById('btnBetPaf').classList.remove('selected');
+                flipButton.innerText = "Choisis un pari";
+                isFlashing = false;
+                updateStatsDOM();
+                checkAchievements();
+                refreshShopUI();
+            }, 2000);
         }
 
         function checkAchievements() {
@@ -1021,130 +617,44 @@
 
         function triggerBanner(text) {
             let banner = document.getElementById('bannerNotification');
-            banner.innerText = text;
-            banner.classList.add('show');
-            for (let i = 0; i < 30; i++) createConfetti();
-            setTimeout(() => { banner.classList.remove('show'); }, 4000);
+            banner.innerText = text; banner.classList.add('show');
+            for (let i = 0; i < 20; i++) createConfetti();
+            setTimeout(() => { banner.classList.remove('show'); }, 3000);
         }
 
         function createConfetti() {
             let confetti = document.createElement('div');
             confetti.classList.add('confetti');
-            let side = Math.random() < 0.5 ? Math.floor(Math.random() * 100) : window.innerWidth - Math.floor(Math.random() * 100) - 10;
-            confetti.style.left = side + 'px';
-            confetti.style.top = Math.floor(Math.random() * 50) + 'px';
-            let colors = ['#ffd700', '#ff0000', '#ffffff', '#00adb5', '#5cdb95'];
+            confetti.style.left = Math.floor(Math.random() * window.innerWidth) + 'px';
+            confetti.style.top = '0px';
+            let colors = ['#ffd700', '#ff0000', '#00adb5'];
             confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.appendChild(confetti);
             setTimeout(() => { confetti.remove(); }, 1500);
         }
 
-        function triggerCoinFlipViaClick() {
-            if (!flipButton.disabled) flipCoin();
-        }
-
-        function flipCoin() {
-            if (isFlashing || !selectedBet) return; 
-            isFlashing = true;
-            resultDiv.innerText = "";
-            flipButton.disabled = true;
-            
-            let isHeads = Math.random() < 0.5;
-            let finalDegrees = (Math.floor(Math.random() * 4) + 5) * 360 + (isHeads ? 0 : 180);
-            coin.style.transform = `rotateY(${finalDegrees}deg)`;
-            
-            setTimeout(() => {
-                totalFlips++;
-                localStorage.setItem('pifpaf_flips', totalFlips);
-                let rollResult = isHeads ? "PIF" : "PAF";
-
-                if (isHeads) {
-                    resultDiv.innerText = "Résultat : PIF !";
-                    pifStreak++;
-                    if (pifStreak === 9) {
-                        haloDiv.innerText = "comme le master chief GG";
-                        unlock('halo', "👁️‍寻 Succès Secret : Découvre l'easter egg halo");
-                        setTimeout(() => { haloDiv.innerText = ""; }, 3000);
-                        pifStreak = 0;
-                    }
-                } else {
-                    resultDiv.innerText = "Résultat : PAF !";
-                    pifStreak = 0;
-                }
-
-                if (selectedBet === rollResult) {
-                    userPoints += 3;
-                    localStorage.setItem('pifpaf_points', userPoints);
-                    triggerBanner(`BON PARI ! +3 Points 🪙`);
-                } else {
-                    resultDiv.innerText += " (Pari perdu)";
-                }
-
-                selectedBet = null;
-                document.getElementById('btnBetPif').classList.remove('selected');
-                document.getElementById('btnBetPaf').classList.remove('selected');
-                flipButton.innerText = "Choisis un pari";
-                isFlashing = false;
-                updateStatsDOM();
-                checkAchievements();
-                refreshShopUI();
-            }, 2000);
-        }
-
-        function toggleMenu() {
-            document.getElementById('changelogPanel').classList.remove('open');
-            document.getElementById('shopPanel').classList.remove('open');
-            document.getElementById('menuPanel').classList.toggle('open');
-        }
-
-        function toggleChangelog() {
-            document.getElementById('menuPanel').classList.remove('open');
-            document.getElementById('shopPanel').classList.remove('open');
-            document.getElementById('changelogPanel').classList.toggle('open');
-        }
-
-        function toggleShop() {
-            document.getElementById('menuPanel').classList.remove('open');
-            document.getElementById('changelogPanel').classList.remove('open');
-            document.getElementById('shopPanel').classList.toggle('open');
-            refreshShopUI();
-        }
+        function triggerCoinFlipViaClick() { if (!flipButton.disabled) flipCoin(); }
+        function toggleMenu() { document.getElementById('changelogPanel').classList.remove('open'); document.getElementById('shopPanel').classList.remove('open'); document.getElementById('menuPanel').classList.toggle('open'); }
+        function toggleChangelog() { document.getElementById('menuPanel').classList.remove('open'); document.getElementById('shopPanel').classList.remove('open'); document.getElementById('changelogPanel').classList.toggle('open'); }
+        function toggleShop() { document.getElementById('menuPanel').classList.remove('open'); document.getElementById('changelogPanel').classList.remove('open'); document.getElementById('shopPanel').classList.toggle('open'); refreshShopUI(); }
 
         function switchTab(tab) {
-            document.getElementById('tabSucces').classList.remove('active');
-            document.getElementById('tabStats').classList.remove('active');
-            document.getElementById('contentSucces').classList.remove('active');
-            document.getElementById('contentStats').classList.remove('active');
-            if (tab === 'succes') {
-                document.getElementById('tabSucces').classList.add('active');
-                document.getElementById('contentSucces').classList.add('active');
-            } else {
-                document.getElementById('tabStats').classList.add('active');
-                document.getElementById('contentStats').classList.add('active');
-            }
+            document.getElementById('tabSucces').classList.remove('active'); document.getElementById('tabStats').classList.remove('active');
+            document.getElementById('contentSucces').classList.remove('active'); document.getElementById('contentStats').classList.remove('active');
+            if (tab === 'succes') { document.getElementById('tabSucces').classList.add('active'); document.getElementById('contentSucces').classList.add('active'); }
+            else { document.getElementById('tabStats').classList.add('active'); document.getElementById('contentStats').classList.add('active'); }
         }
 
         function toggleTheme() {
             if (document.body.getAttribute('data-theme') === 'dark') document.body.removeAttribute('data-theme');
             else document.body.setAttribute('data-theme', 'dark');
-
-            let now = Date.now();
-            if (leverClicks > 0 && (now - lastClickTime) / 1000 >= 3) leverClicks = 0;
-            leverClicks++;
-            lastClickTime = now;
-
-            if (leverClicks === 10) {
-                haloDiv.innerText = "c'est beau hein ?";
-                leverClicks = 0;
-                setTimeout(() => { if (haloDiv.innerText === "c'est beau hein ?") haloDiv.innerText = ""; }, 3000);
-            }
         }
 
         const skinsConfig = [
             { id: 'default', name: 'Pièce Classique', desc: 'Le style d\'origine jaune.', cost: 0, type: 'free' },
             { id: 'halo', name: 'Anneau Halo', desc: 'Forme de pièce, texture métallique.', cost: 20, type: 'points' },
             { id: 'minecraft', name: 'Lingot d\'Or Minecraft', desc: 'Un lingot rectangulaire pur.', cost: 500, type: 'points' },
-            { id: 'youtube', name: 'Pièce YouTube', desc: 'Ronde. Débloquée via le lien YouTube !', cost: 0, type: 'youtube' }
+            { id: 'youtube', name: 'Pièce YouTube', desc: 'Débloquée via le lien YouTube !', cost: 0, type: 'youtube' }
         ];
 
         function refreshShopUI() {
@@ -1152,42 +662,32 @@
             let html = '';
             skinsConfig.forEach(skin => {
                 let actionBtn = '';
-                if (currentSkin === skin.id) {
-                    actionBtn = `<button class="bet-btn selected" style="width:100%; cursor:default;">ÉQUIPÉ</button>`;
-                } else if (ownedSkins[skin.id]) {
-                    actionBtn = `<button class="bet-btn" style="width:100%; background-color:#00adb5; color:white;" onclick="equipSkin('${skin.id}')">ÉQUIPER</button>`;
-                } else {
+                if (currentSkin === skin.id) { actionBtn = `<button class="bet-btn selected" style="width:100%;">ÉQUIPÉ</button>`; }
+                else if (ownedSkins[skin.id]) { actionBtn = `<button class="bet-btn" style="width:100%; background:#00adb5; color:white;" onclick="equipSkin('${skin.id}')">ÉQUIPER</button>`; }
+                else {
                     if (skin.type === 'points') {
                         let canBuy = userPoints >= skin.cost;
-                        actionBtn = `<button class="bet-btn" style="width:100%; ${!canBuy ? 'opacity:0.5;' : ''}" onclick="buySkin('${skin.id}', ${skin.cost})" ${!canBuy ? 'disabled' : ''}>ACHETER (${skin.cost} Pts)</button>`;
-                    } else if (skin.type === 'youtube') {
-                        actionBtn = `<button class="bet-btn" style="width:100%; opacity:0.6; font-size:11px;" disabled>CLIQUE SUR LE LIEN YT (BAS GAUCHE)</button>`;
-                    }
+                        actionBtn = `<button class="bet-btn" style="width:100%;" onclick="buySkin('${skin.id}', ${skin.cost})" ${!canBuy ? 'disabled' : ''}>ACHETER (${skin.cost} Pts)</button>`;
+                    } else { actionBtn = `<button class="bet-btn" style="width:100%; font-size:11px;" disabled>CLIQUE SUR LE LIEN YT</button>`; }
                 }
-                html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">${skin.name}</span><span style="font-size:11px; color:var(--sub-text-color);">${skin.desc}</span><div style="margin-top:5px;">${actionBtn}</div></div>`;
+                html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5;">${skin.name}</span><br><span style="font-size:11px;">${skin.desc}</span><div style="margin-top:5px;">${actionBtn}</div></div>`;
             });
             container.innerHTML = html;
         }
 
         function buySkin(id, cost) {
             if (userPoints >= cost && !ownedSkins[id]) {
-                userPoints -= cost;
-                ownedSkins[id] = true;
+                userPoints -= cost; ownedSkins[id] = true;
                 localStorage.setItem('pifpaf_points', userPoints);
                 localStorage.setItem('pifpaf_owned_skins', JSON.stringify(ownedSkins));
-                triggerBanner("🛒 Skin acheté avec succès !");
-                updateStatsDOM();
-                refreshShopUI();
+                updateStatsDOM(); refreshShopUI();
             }
         }
 
         function equipSkin(id) {
             if (ownedSkins[id]) {
-                currentSkin = id;
-                localStorage.setItem('pifpaf_current_skin', currentSkin);
-                coin.setAttribute('data-skin', id);
-                triggerBanner(`Skin activé : ${id.toUpperCase()}`);
-                refreshShopUI();
+                currentSkin = id; localStorage.setItem('pifpaf_current_skin', currentSkin);
+                coin.setAttribute('data-skin', id); refreshShopUI();
             }
         }
 
@@ -1200,59 +700,26 @@
             }
         }
 
-        /* --- LOGIQUE DE DÉBOGAGE SECRÈTE (DEV CONSOLE) --- */
         document.body.addEventListener('click', function(e) {
             if (e.target === document.body) {
                 let now = Date.now();
                 if (now - lastBgClickTime > 2000) bgClicks = 0;
-                bgClicks++;
-                lastBgClickTime = now;
-
+                bgClicks++; lastBgClickTime = now;
                 if (bgClicks === 3) {
                     bgClicks = 0;
-                    let code = prompt("Entrez le code secret de débogage :");
-                    if (code === "6849") {
-                        document.getElementById('debugPanel').classList.add('open');
-                    }
+                    let code = prompt("Entrez le code secret :");
+                    if (code === "6849") document.getElementById('debugPanel').classList.add('open');
                 }
             }
         });
 
-        function debugAddPoints() {
-            userPoints += 500;
-            localStorage.setItem('pifpaf_points', userPoints);
-            updateStatsDOM();
-            refreshShopUI();
-            triggerBanner("DEV : +500 Points ajoutés ! 🪙");
-        }
-
-        function debugUnlockSkins() {
-            skinsConfig.forEach(s => ownedSkins[s.id] = true);
-            localStorage.setItem('pifpaf_owned_skins', JSON.stringify(ownedSkins));
-            refreshShopUI();
-            triggerBanner("DEV : Tous les skins débloqués ! 🛒");
-        }
-
-        function debugUnlockAchievements() {
-            ['play10', 'play50', 'play100', 'halo'].forEach(id => unlockedAchievements[id] = true);
-            localStorage.setItem('pifpaf_unlocked', JSON.stringify(unlockedAchievements));
-            refreshAchievementsUI();
-            updateStatsDOM();
-            triggerBanner("DEV : Tous les succès validés ! 🏆");
-        }
-
-        function debugResetAll() {
-            localStorage.clear();
-            location.reload();
-        }
-
-        function closeDebug() {
-            document.getElementById('debugPanel').classList.remove('open');
-        }
+        function debugAddPoints() { userPoints += 500; localStorage.setItem('pifpaf_points', userPoints); updateStatsDOM(); refreshShopUI(); }
+        function debugUnlockSkins() { skinsConfig.forEach(s => ownedSkins[s.id] = true); localStorage.setItem('pifpaf_owned_skins', JSON.stringify(ownedSkins)); refreshShopUI(); }
+        function debugResetAll() { localStorage.clear(); location.reload(); }
+        function closeDebug() { document.getElementById('debugPanel').classList.remove('open'); }
 
         coin.setAttribute('data-skin', currentSkin);
-        updateStatsDOM();
-        refreshAchievementsUI();
+        updateStatsDOM(); refreshAchievementsUI();
     </script>
 
     <!-- Vercel Analytics pour site HTML statique -->
