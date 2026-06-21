@@ -148,6 +148,14 @@
             transform: translate(-50%, -50%);
         }
 
+        .coin[data-skin="triforce"] .side {
+            border-radius: 0 !important;
+            border: none !important;
+            background: url('image_15f981.png') no-repeat center / contain !important;
+            box-shadow: none !important;
+            color: transparent !important;
+        }
+
         .bet-container {
             display: flex;
             gap: 15px;
@@ -489,7 +497,7 @@
         .achievement-info {
             display: flex;
             flex-direction: column;
-                }
+        }
 
         .achievement-title {
             font-weight: bold;
@@ -800,12 +808,18 @@
 
     <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v5.1.1</button>
+    <button class="version-btn" onclick="toggleChangelog()">v5.1.2</button>
     <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Musique On/Off">🎵</button>
 
     <div class="changelog-panel" id="changelogPanel">
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
+            <div class="version-block">
+                <div class="version-title">v5.1.2</div>
+                <ul class="version-list">
+                    <li>Nouveau skin : Triforce ajouté à la boutique !</li>
+                </ul>
+            </div>
             <div class="version-block">
                 <div class="version-title">v5.1.1</div>
                 <ul class="version-list">
@@ -1292,6 +1306,7 @@
             { id: 'default', name: 'Pièce Classique', desc: 'Le style d\'origine jaune.', cost: 0, type: 'free' },
             { id: 'halo', name: 'Anneau Halo', desc: 'Forme de pièce, texture métallique.', cost: 20, type: 'points' },
             { id: 'minecraft', name: 'Lingot d\'Or Minecraft', desc: 'Un lingot rectangulaire pur.', cost: 500, type: 'points' },
+            { id: 'triforce', name: 'Triforce', desc: 'Le pouvoir des trois triangles sacrés.', cost: 300, type: 'points' },
             { id: 'youtube', name: 'Pièce YouTube', desc: 'Ronde. Débloquée via le lien YouTube !', cost: 0, type: 'youtube' }
         ];
 
@@ -1328,7 +1343,7 @@
                 let canBuy = userPoints >= 20;
                 chanceBtn = `<button class="bet-btn" style="width:100%; ${!canBuy ? 'opacity:0.5;' : ''}" onclick="buyBonus('chance', 20)" ${!canBuy ? 'disabled' : ''}>ACHETER (20 Pts)</button>`;
             }
-            html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">Bonus de chance 🍀</span><span style="font-size:11px; color:var(--sub-text-color);">Augmente la chance de réussir ton pari de 10% pendant 2min et 30s.</span><div style="margin-top:5px;">${chanceBtn}</div></div>`;
+            html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">Bonus de chance 🍀</span><span style="font-size:11px; color:var(--sub-text-color);">Augmente la chance de réuss intuition pari de 10% pendant 2min et 30s.</span><div style="margin-top:5px;">${chanceBtn}</div></div>`;
 
             let recoveryBtn = '';
             if (recoveryTimer !== null) {
