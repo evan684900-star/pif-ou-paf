@@ -261,6 +261,25 @@
             transform: scale(1.05);
         }
 
+        /* --- STYLE DU BOUTON AUDIO MUTE --- */
+        .mute-btn {
+            position: fixed;
+            top: 23px;
+            left: 85px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0.7;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .mute-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
         .changelog-panel {
             position: fixed;
             top: 85px;
@@ -773,14 +792,18 @@
 </head>
 <body>
 
+    <audio id="bgMusic" loop>
+        <source src="Enregistrement-2026-06-21-112353.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="banner-notification" id="bannerNotification">SUCCÈS DÉBLOQUÉ !</div>
 
-    <!-- BANNER TIMER ROUGE POUR SÉRIE RECUPERABLE -->
     <div class="recovery-timer-banner" id="recoveryTimerBanner">⚠️ SÉRIE PERDUE ! RESTAUREZ-LA DANS LA BOUTIQUE : <span id="recoverySeconds">60</span>s</div>
 
     <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
     <button class="version-btn" onclick="toggleChangelog()">v5.0</button>
+    <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Musique On/Off">🎵</button>
 
     <div class="changelog-panel" id="changelogPanel">
         <div class="changelog-header">Journal des changements</div>
@@ -1004,6 +1027,33 @@
 
         let bgClicks = 0;
         let lastBgClickTime = 0;
+
+        // GESTION AUDIO DE BACKGROUND
+        const bgMusic = document.getElementById('bgMusic');
+        let musicStarted = false;
+        let isMuted = false;
+
+        function startMusicOnFirstClick() {
+            if (!musicStarted && !isMuted) {
+                bgMusic.play().then(() => {
+                    musicStarted = true;
+                    document.removeEventListener('click', startMusicOnFirstClick);
+                }).catch(e => {
+                    console.log("Lecture en attente d'une interaction utilisateur valide.");
+                });
+            }
+        }
+        document.addEventListener('click', startMusicOnFirstClick);
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            bgMusic.muted = isMuted;
+            if (!isMuted && !musicStarted) {
+                bgMusic.play();
+                musicStarted = true;
+            }
+            document.getElementById('muteBtn').innerText = isMuted ? "🔇" : "🎵";
+        }
 
         setTimeout(() => { closeBubble(); }, 5000);
         function closeBubble() { promoBubble.classList.add('hidden'); }
