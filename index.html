@@ -112,7 +112,6 @@
             transform: rotateY(180deg);
         }
 
-        /* --- STYLES DES SKINS DYNAMIQUES --- */
         .coin[data-skin="minecraft"] .side {
             border-radius: 12px !important;
             border: 4px solid #b78727 !important;
@@ -261,11 +260,10 @@
             transform: scale(1.05);
         }
 
-        /* --- STYLE DU BOUTON AUDIO MUTE --- */
         .mute-btn {
             position: fixed;
             top: 23px;
-            left: 85px;
+            left: 95px;
             background: none;
             border: none;
             font-size: 18px;
@@ -362,9 +360,12 @@
             transform: scale(1.1);
         }
 
-        .medal-btn svg {
-            width: 64px;
-            height: 64px;
+        .medal-custom-img {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            border: 3px solid var(--menu-border);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
             display: block;
         }
 
@@ -488,7 +489,7 @@
         .achievement-info {
             display: flex;
             flex-direction: column;
-        }
+                }
 
         .achievement-title {
             font-weight: bold;
@@ -540,7 +541,6 @@
             top: 25px;
         }
 
-        /* --- TIMER DE RÉCUPÉRATION ROUGE (V5.0) --- */
         .recovery-timer-banner {
             position: fixed;
             top: -100px;
@@ -717,7 +717,6 @@
             background: rgba(255,255,255,0.03);
         }
 
-        /* --- INTERFACE DE DÉBOGAGE INTERNE (INVISIBLE) --- */
         .debug-panel {
             position: fixed;
             top: 50%;
@@ -764,7 +763,6 @@
             border-color: #ff0055;
         }
 
-        /* --- STYLES DU TEXTE DE COMBO FLASH --- */
         .combo-overlay {
             position: fixed;
             top: 50%;
@@ -802,12 +800,24 @@
 
     <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v5.0</button>
+    <button class="version-btn" onclick="toggleChangelog()">v5.1.1</button>
     <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Musique On/Off">🎵</button>
 
     <div class="changelog-panel" id="changelogPanel">
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
+            <div class="version-block">
+                <div class="version-title">v5.1.1</div>
+                <ul class="version-list">
+                    <li>image de la medaille remplacée</li>
+                </ul>
+            </div>
+            <div class="version-block">
+                <div class="version-title">v5.1.0</div>
+                <ul class="version-list">
+                    <li>musique de fond ajoutée</li>
+                </ul>
+            </div>
             <div class="version-block">
                 <div class="version-title">v5.0 - Boutique &amp; Système de Bonus</div>
                 <ul class="version-list">
@@ -816,43 +826,11 @@
                     <li>Affichage dynamique précis des combos et des records sous le score.</li>
                 </ul>
             </div>
-            <div class="version-block">
-                <div class="version-title">v4.2.1 - Télémétrie</div>
-                <ul class="version-list">
-                    <li>Ajustements et optimisations des configurations système.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v4.2.0 - Boutique &amp; Système de Skins</div>
-                <ul class="version-list">
-                    <li>Ajout de la boutique de skins à droite de l'icône succès.</li>
-                    <li>Skins Minecraft, Halo et YouTube disponibles.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v1.0.0 à v4.0.0 - Fondations</div>
-                <ul class="version-list">
-                    <li>Mise en place de la physique 3D, gestion des paris, statistiques, thèmes Clair/Sombre et succès globaux.</li>
-                </ul>
-            </div>
         </div>
     </div>
 
     <button class="medal-btn" onclick="toggleMenu()" title="Succès et Statistiques">
-        <svg viewBox="0 0 32 32" shape-rendering="crispEdges">
-            <path d="M6 3h8v1H6zm12 0h8v1h-8zM5 4h1v1H5zm8 0h1v4h-1zm4 0h1v4h-1zm8 0h1v1h-24v1H4zm0 1h1v1h-1zm22 0h1v2h-1zm-22 1h1v4H5zm20 0h1v4h-1zM9 11h3v1H9zm11 0h3v1h-3zm-9 1h1v1h-1zm7 0h1v1h-1zm-6 1h1v4h-1zm4 0h1v4h-1zm-4 4h4v1h-4zm-4 1h12v1H9zm-2 1h16v1H7zm-1 1h18v1H6zm-1 1h20v6H5zm1 6h18v1H6zm1 1h16v1H7zm2 1h14v1H9zm3 1h8v1h-8z" fill="#000000" />
-            <path d="M7 5h4v1H7zm-1 1h1v4H6zm1 3h1v1H7zm1-1h1v1H8zm1-1h1v1H9z" fill="#006699" />
-            <path d="M6 4h4v1H6zm0 1h1v1H6zm1 1h1v1H7zm1 1h1v1H8z" fill="#00b4ff" />
-            <path d="M10 4h3v1h-3zm1 1h2v1h-2zm1 1h1v2h-1z" fill="#ffffff" />
-            <path d="M20 5h4v1h-4zm5 1h1v4h-1zm-2 3h1v1h-1zm-1-1h1v1h-1zm-1-1h1v1h-1z" fill="#006699" />
-            <path d="M22 4h4v1h-4zm4 1h1v1h-1zm-1 1h1v1h-1zm-1 1h1v1h-1z" fill="#00b4ff" />
-            <path d="M19 4h3v1h-3zm1 1h2v1h-2zm1 1h1v2h-1z" fill="#ffffff" />
-            <path d="M12 18h8v1h-8zm-3 1h14v1H9zm-2 1h16v1H7zm-1 1h18v6H6zm1 6h16v1H7zm2 1h14v1H9zm3 1h8v1h-8z" fill="#ffcc00" />
-            <path d="M12 18h6v1h-6zm-3 1h5v1H9zm-2 1h4v1H7zm-1 1h3v3H6zm0 3h1v2H6zm1 2h2v1H7zm2 1h4v1H9zm3 1h4v1h-4z" fill="#ffffff" />
-            <path d="M14 19h4v1h-4zm-3 1h4v1h-4zm-2 1h3v4H9zm0 4h1v1H9zm1 1h3v1h-3zm3 1h3v1h-3z" fill="#ffe57f" />
-            <path d="M18 18h2v1h-2zm3 1h2v1h-2zm1 1h2v1h-2zm1 1h1v5h-1zm-1 5h1v1h-1zm-2 1h2v1h-2zm-3 1h3v1h-3zm-3 1h3v1h-3z" fill="#ffa000" />
-            <path d="M15 20h2v1h-2zm-2 2h6v1h-6zm1 1h4v1h-4zm-1 1h6v1h-6zm2 1h2v1h-2z" fill="#e67e22" />
-        </svg>
+        <img src="medaille.jpg" alt="Médailles et Succès" class="medal-custom-img">
     </button>
 
     <button class="shop-btn" onclick="toggleShop()" title="Boutique de Skins &amp; Bonus">
@@ -1017,7 +995,6 @@
         let ownedSkins = JSON.parse(localStorage.getItem('pifpaf_owned_skins')) || { default: true };
         let currentSkin = localStorage.getItem('pifpaf_current_skin') || 'default';
 
-        // GESTION DES CHECKS TEMPORELS ET SÉRIES V5.0 MODIFIÉS
         let highestCombo = parseInt(localStorage.getItem('pifpaf_highest_combo')) || 0;
         let chanceSecondsLeft = parseInt(localStorage.getItem('pifpaf_chance_left')) || 0;
         
@@ -1028,7 +1005,6 @@
         let bgClicks = 0;
         let lastBgClickTime = 0;
 
-        // GESTION AUDIO DE BACKGROUND
         const bgMusic = document.getElementById('bgMusic');
         let musicStarted = false;
         let isMuted = false;
@@ -1058,19 +1034,16 @@
         setTimeout(() => { closeBubble(); }, 5000);
         function closeBubble() { promoBubble.classList.add('hidden'); }
 
-        // COMPTEUR GLOBAL INTERNE MAJ TEMPS RÉEL (BONUS TICKING)
         setInterval(() => {
             totalSeconds++;
             localStorage.setItem('pifpaf_seconds', totalSeconds);
             
-            // Compte à rebours dynamique du Bonus de Chance
             if (chanceSecondsLeft > 0) {
                 chanceSecondsLeft--;
                 localStorage.setItem('pifpaf_chance_left', chanceSecondsLeft);
                 if (chanceSecondsLeft === 0) {
                     triggerBanner("Le bonus de chance a expiré ! 🍀");
                 }
-                // Si la boutique est visible, rafraîchir en continu le timer
                 if (document.getElementById('shopPanel').classList.contains('open')) {
                     refreshShopUI();
                 }
@@ -1163,7 +1136,6 @@
         function flipCoin() {
             if (isFlashing || !selectedBet) return; 
             
-            // Lancer une pièce annule la période de secours en cours si elle n'a pas été achetée à temps
             if (recoveryTimer) {
                 stopRecoveryTimer();
             }
@@ -1172,7 +1144,6 @@
             resultDiv.innerText = "";
             flipButton.disabled = true;
             
-            // +10% de chance si le timer de chance est actif
             let winChance = (chanceSecondsLeft > 0) ? 0.60 : 0.50;
             let playerWins = Math.random() < winChance;
             let rollResult = playerWins ? selectedBet : (selectedBet === 'PIF' ? 'PAF' : 'PIF');
@@ -1219,7 +1190,6 @@
                 } else {
                     resultDiv.innerText += " (Pari perdu)";
                     
-                    // Si le joueur avait une série, on ouvre la fenêtre d'achat direct de récupération
                     if (winStreak > 0) {
                         savedStreakBeforeLoss = winStreak;
                         winStreak = 0; 
@@ -1325,12 +1295,10 @@
             { id: 'youtube', name: 'Pièce YouTube', desc: 'Ronde. Débloquée via le lien YouTube !', cost: 0, type: 'youtube' }
         ];
 
-        // LOGIQUE D'AFFICHAGE MAJ BOUTIQUE POUR OBJETS TEMPORELS ET INSTANTANÉS
         function refreshShopUI() {
             let container = document.getElementById('shopContent');
             let html = '';
             
-            // Partie Skins
             html += `<div style="font-weight:bold; color:#ffd700; font-size:13px; margin-bottom:8px; border-bottom:2px dashed var(--menu-border);">-- SKINS D'APPARENCE --</div>`;
             skinsConfig.forEach(skin => {
                 let actionBtn = '';
@@ -1349,10 +1317,8 @@
                 html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">${skin.name}</span><span style="font-size:11px; color:var(--sub-text-color);">${skin.desc}</span><div style="margin-top:5px;">${actionBtn}</div></div>`;
             });
 
-            // Partie Objets / Bonus Actifs
             html += `<div style="font-weight:bold; color:#f8c216; font-size:13px; margin-top:15px; margin-bottom:8px; border-bottom:2px dashed var(--menu-border);">-- OBJETS ET BONUS --</div>`;
             
-            // 1. Bouton Bonus de Chance 2m30s
             let chanceBtn = '';
             if (chanceSecondsLeft > 0) {
                 let m = Math.floor(chanceSecondsLeft / 60);
@@ -1364,7 +1330,6 @@
             }
             html += `<div class="shop-item"><span style="font-weight:bold; color:#00adb5; font-size:13px;">Bonus de chance 🍀</span><span style="font-size:11px; color:var(--sub-text-color);">Augmente la chance de réussir ton pari de 10% pendant 2min et 30s.</span><div style="margin-top:5px;">${chanceBtn}</div></div>`;
 
-            // 2. Bouton Récupération de série immédiat
             let recoveryBtn = '';
             if (recoveryTimer !== null) {
                 let canBuy = userPoints >= 50;
@@ -1389,12 +1354,11 @@
             }
         }
 
-        // TRAITEMENT DIRECT DES BONUS (DURÉE & UTILISATION IMMÉDIATE)
         function buyBonus(id, cost) {
             if (userPoints >= cost) {
                 if (id === 'chance') {
                     userPoints -= cost;
-                    chanceSecondsLeft = 150; // 2 minutes 30 secondes
+                    chanceSecondsLeft = 150; 
                     localStorage.setItem('pifpaf_points', userPoints);
                     localStorage.setItem('pifpaf_chance_left', chanceSecondsLeft);
                     triggerBanner("🛒 Bonus de chance activé pour 2m30 ! 🍀");
@@ -1403,7 +1367,7 @@
                 } else if (id === 'streakRecovery') {
                     if (recoveryTimer !== null) {
                         userPoints -= cost;
-                        winStreak = savedStreakBeforeLoss; // Restauration immédiate de la série
+                        winStreak = savedStreakBeforeLoss; 
                         localStorage.setItem('pifpaf_points', userPoints);
                         stopRecoveryTimer();
                         triggerBanner("🔥 Série restaurée instantanément avec succès !");
@@ -1433,7 +1397,6 @@
             }
         }
 
-        /* --- LOGIQUE DE DÉBOGAGE SECRÈTE (DEV CONSOLE) --- */
         document.body.addEventListener('click', function(e) {
             if (e.target === document.body) {
                 let now = Date.now();
