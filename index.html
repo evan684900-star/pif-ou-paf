@@ -682,6 +682,22 @@
             transition: fill 0.3s;
         }
 
+        /* Mode Awesome Arc-en-ciel */
+        .youtube-link.awesome-mode svg {
+            animation: youtubeAwesomeFlash 0.2s linear infinite !important;
+        }
+
+        @keyframes youtubeAwesomeFlash {
+            0% { fill: #ff0000; }
+            14% { fill: #ff7f00; }
+            28% { fill: #ffff00; }
+            42% { fill: #00ff00; }
+            56% { fill: #0000ff; }
+            70% { fill: #4b0082; }
+            84% { fill: #9400d3; }
+            100% { fill: #ff0000; }
+        }
+
         .promo-bubble {
             background-color: var(--bubble-bg);
             color: var(--bubble-text);
@@ -822,13 +838,19 @@
 
     <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v5.1.5</button>
+    <button class="version-btn" onclick="toggleChangelog()">v5.1.6</button>
     <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Musique On/Off">🎵</button>
     <button class="mute-btn" id="sfxMuteBtn" onclick="toggleSfxMute()" title="Bruitages On/Off" style="left: 145px;">🔊</button>
 
     <div class="changelog-panel" id="changelogPanel">
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
+            <div class="version-block">
+                <div class="version-title">v5.1.6</div>
+                <ul class="version-list">
+                    <li>tapez "awesome" sur votre clavier et vous verrez la magie opperer (ne marche pas sur téléphone)</li>
+                </ul>
+            </div>
             <div class="version-block">
                 <div class="version-title">v5.1.5</div>
                 <ul class="version-list">
@@ -838,14 +860,14 @@
             <div class="version-block">
                 <div class="version-title">v5.1.4</div>
                 <ul class="version-list">
-                    <li>Ajout du son de succès rare officiel de Minecraft à chaque déverrouillage !</li>
-                    <li>Ajout d'un bouton indépendant (🔊) pour couper uniquement les petits bruitages.</li>
+                    <li>Ajout d'un son à chaque succés obtenu</li>
+                    <li>Ajout d'un bouton (🔊) pour couper uniquement les petits bruitages.</li>
                 </ul>
             </div>
             <div class="version-block">
                 <div class="version-title">v5.1.3</div>
                 <ul class="version-list">
-                    <li>Mise à jour du visuel Minecraft avec le lingot d'or pixel art officiel !</li>
+                    <li>ajout du skin du lingot d'or de minecraft</li>
                 </ul>
             </div>
             <div class="version-block">
@@ -870,10 +892,16 @@
                 <div class="version-title">v5.0 - Boutique &amp; Système de Bonus</div>
                 <ul class="version-list">
                     <li>Changement du Bonus de Chance (🍀) : Dure désormais 2min et 30s après achat.</li>
-                    <li>Changement de la Récupération de Série (🔥) : Devient un consommable à acheter et utiliser directement dans la boutique pendant le compte à rebours critique pour restaurer instantanément la série.</li>
-                    <li>Affichage dynamique précis des combos et des records sous le score.</li>
+                    <li>Changement de la Récupération de Série (🔥) : Devient un consommable à acheter et utiliser directement dans la boutique pendant le compte à rebours pour restaurer instantanément la série.</li>
+                    <li>Affichage dynamique des combos et des records sous le score.</li>
                 </ul>
             </div>
+            <div class="version-block">
+                    <div class="version-title">v1.0.0-4.0.0</div>
+                    <ul class="version-list">
+                        <li>mise en place de la base du site et ajout de a peu près tout ce que vous voyez</li>
+                </ul>
+            </div>   
         </div>
     </div>
 
@@ -1058,6 +1086,9 @@
         let isMuted = false;
         let isSfxMuted = localStorage.getItem('pifpaf_sfx_muted') === 'true';
 
+        // Variable pour stocker les touches tapées pour l'easter egg
+        let typedInput = "";
+
         function startMusicOnFirstClick() {
             if (!musicStarted && !isMuted) {
                 bgMusic.play().then(() => {
@@ -1069,6 +1100,26 @@
             }
         }
         document.addEventListener('click', startMusicOnFirstClick);
+
+        // Détection du mot secret "awesome"
+        window.addEventListener('keydown', (e) => {
+            typedInput += e.key.toLowerCase();
+            if (typedInput.length > 7) {
+                typedInput = typedInput.slice(-7);
+            }
+            
+            if (typedInput === "awesome") {
+                let ytButton = document.querySelector('.youtube-link');
+                ytButton.classList.toggle('awesome-mode');
+                
+                if (ytButton.classList.contains('awesome-mode')) {
+                    triggerBanner("🌈 MODE AWESOME ACTIVÉ ! ⌨️");
+                } else {
+                    triggerBanner("Mode Awesome désactivé");
+                }
+                typedInput = ""; // Réinitialise
+            }
+        });
 
         function toggleMute() {
             isMuted = !isMuted;
