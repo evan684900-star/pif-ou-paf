@@ -122,6 +122,10 @@
             image-rendering: pixelated;
         }
 
+        .coin[data-skin="minecraft"] .tails {
+            transform: rotateY(180deg) scaleX(-1) !important;
+        }
+
         .coin[data-skin="halo"] .side {
             border-radius: 50% !important;
             border: 5px solid #4b6584 !important;
@@ -682,7 +686,6 @@
             transition: fill 0.3s;
         }
 
-        /* Mode Awesome Arc-en-ciel */
         .youtube-link.awesome-mode svg {
             animation: youtubeAwesomeFlash 0.2s linear infinite !important;
         }
@@ -821,7 +824,6 @@
             100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0; }
         }
 
-        /* --- STYLES DE LA FENETRE ALERTE SECURITE --- */
         .security-modal-overlay {
             position: fixed;
             top: 0;
@@ -845,21 +847,6 @@
             text-align: center;
             box-sizing: border-box;
         }
-        .security-modal-header {
-            color: #d11a2a;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .security-modal-body p {
-            font-size: 13px;
-            line-height: 1.6;
-            margin-bottom: 18px;
-            color: var(--text-color) !important;
-            text-align: left;
-        }
         .security-modal-btn {
             background-color: #d11a2a;
             color: white;
@@ -882,13 +869,12 @@
 </head>
 <body>
 
-    <!-- FENÊTRE POP-UP D'ALERTE DE SÉCURITÉ AU DÉMARRAGE -->
     <div class="security-modal-overlay" id="securityModal">
         <div class="security-modal-card">
-            <div class="security-modal-header">⚠️ ALERTE DE SÉCURITÉ IMPORTANTE ⚠️</div>
+            <div class="security-modal-header">⚠️ ALERTE SÉCURITÉ IMPORTANTE ⚠️</div>
             <div class="security-modal-body">
                 <p><strong>Salut ! Attention, il existe un faux site qui ressemble au mien.</strong> Il essaie d'arnaquer les gens avec un faux message de sécurité.</p>
-                <p>Ne cliquez jamais sur <strong>'Win + X'</strong> ou ne copiez/collez <strong>rien</strong> dans votre terminal si on vous le demande, assurez vous de bien écrire le bon nom.</p>
+                <p>Ne cliquez jamais sur <strong>'Win + X'</strong> ou ne copiez/collez <strong>rien</strong> dans votre terminal si on vous le demande, assurez vous de bien écrire le nom.</p>
                 <p>Mon seul vrai lien est : <a href="https://pifoupaf.vercel.app" style="color: #00adb5; font-weight: bold; text-decoration: underline;">pifoupaf.vercel.app</a></p>
             </div>
             <button class="security-modal-btn" onclick="closeSecurityModal()">J'ai compris, lancer le jeu</button>
@@ -903,7 +889,6 @@
         <source src="minecraft-rare-achievement.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Nouveau son Halo ajouté ici -->
     <audio id="haloSound">
         <source src="I need a weapon_2.mp3" type="audio/mpeg">
     </audio>
@@ -914,7 +899,7 @@
 
     <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v5.1.8</button>
+    <button class="version-btn" onclick="toggleChangelog()">v5.1.9</button>
     <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Musique On/Off">🎵</button>
     <button class="mute-btn" id="sfxMuteBtn" onclick="toggleSfxMute()" title="Bruitages On/Off" style="left: 145px;">🔊</button>
 
@@ -922,10 +907,15 @@
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
             <div class="version-block">
+                <div class="version-title">v5.1.9</div>
+                <ul class="version-list">
+                    <li>Corrections de bugs et améliorations.</li>
+                </ul>
+            </div>
+            <div class="version-block">
                 <div class="version-title">v5.1.8</div>
                 <ul class="version-list">
-                    <li>Ajout d'un pop-up de sécurité au lancement pour prévenir d'un faux site.</li>
-                    <li>Corrections de bugs et améliorations.</li>
+                    <li>Ajout d'un pop-up de sécurité au lancement pour prévenir du faux site de phishing (typosquatting).</li>
                 </ul>
             </div>
             <div class="version-block">
@@ -1046,7 +1036,7 @@
 
             <div class="success-section-title">Succès Secrets</div>
             <div class="achievement-item" id="ach-halo">
-                <div class="achievement-icon">👁️‍</div>
+                <div class="achievement-icon">👁️‍🗨️</div>
                 <div class="achievement-info">
                     <div class="achievement-title" id="ach-halo-title">Succès Secret</div>
                     <div class="achievement-desc" id="ach-halo-desc">???</div>
@@ -1177,9 +1167,10 @@
 
         let typedInput = "";
 
-        // Fonction pour fermer la pop-up de sécurité au démarrage
+        // MODIFICATION ICI : On enregistre l'action dans le localStorage à la fermeture
         function closeSecurityModal() {
             document.getElementById('securityModal').style.display = 'none';
+            localStorage.setItem('pifpaf_security_seen', 'true');
         }
 
         function startMusicOnFirstClick() {
@@ -1366,7 +1357,7 @@
                     pifStreak++;
                     if (pifStreak === 9) {
                         haloDiv.innerText = "comme le master chief GG";
-                        unlock('halo', "👁️‍寻 Succès Secret : Découvre l'easter egg halo");
+                        unlock('halo', "👁️‍🗨️ Succès Secret : Découvre l'easter egg halo");
                         setTimeout(() => { haloDiv.innerText = ""; }, 3000);
                         pifStreak = 0;
                     }
@@ -1663,6 +1654,11 @@
         document.getElementById('sfxMuteBtn').innerText = isSfxMuted ? "🔕" : "🔊";
         updateStatsDOM();
         refreshAchievementsUI();
+
+        // MODIFICATION ICI : On vérifie au lancement si la pop-up a déjà été vue
+        if (localStorage.getItem('pifpaf_security_seen') === 'true') {
+            document.getElementById('securityModal').style.display = 'none';
+        }
     </script>
 
     <script defer src="/_vercel/insights/script.js"></script>
