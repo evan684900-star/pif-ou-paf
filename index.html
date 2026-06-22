@@ -117,7 +117,8 @@
             border: none !important;
             background: url('Gold_Ingot_JE4_BE2.png') no-repeat center / contain !important;
             box-shadow: none !important;
-            color: transparent !important;
+            color: #ffffff !important;
+            text-shadow: 2px 2px 0px #000000 !important;
             image-rendering: pixelated;
         }
 
@@ -154,7 +155,8 @@
             border: none !important;
             background: url('image_15f981.png') no-repeat center / contain !important;
             box-shadow: none !important;
-            color: transparent !important;
+            color: #ffffff !important;
+            text-shadow: 1px 1px 3px #000000 !important;
         }
 
         .bet-container {
@@ -382,12 +384,19 @@
             position: fixed;
             top: 20px;
             right: 25px;
-            background: none;
-            border: none;
+            background-color: #ffffff;
+            border: 3px solid #000000;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
             cursor: pointer;
             z-index: 100;
             transition: transform 0.2s;
-            padding: 0;
+            padding: 4px;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
         }
 
         .shop-btn:hover {
@@ -395,8 +404,8 @@
         }
 
         .shop-btn svg {
-            width: 64px;
-            height: 64px;
+            width: 100%;
+            height: 100%;
             display: block;
         }
 
@@ -813,13 +822,19 @@
 
     <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v5.1.4</button>
+    <button class="version-btn" onclick="toggleChangelog()">v5.1.5</button>
     <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Musique On/Off">🎵</button>
     <button class="mute-btn" id="sfxMuteBtn" onclick="toggleSfxMute()" title="Bruitages On/Off" style="left: 145px;">🔊</button>
 
     <div class="changelog-panel" id="changelogPanel">
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
+            <div class="version-block">
+                <div class="version-title">v5.1.5</div>
+                <ul class="version-list">
+                    <li>Corrections de bugs et améliorations.</li>
+                </ul>
+            </div>
             <div class="version-block">
                 <div class="version-title">v5.1.4</div>
                 <ul class="version-list">
