@@ -914,8 +914,12 @@
             to { transform: rotate(-25deg) scale(1.15); }
         }
 
+        /* CORRECTIF : Ajout de la taille et de la perspective manquantes pour afficher la pièce */
         .dr-enemy-side {
             position: relative;
+            width: 140px;
+            height: 140px;
+            perspective: 1000px;
             transition: all 0.5s ease;
         }
 
@@ -1594,12 +1598,12 @@
                         betHistory.shift();
                     }
                     if (betHistory.join(',') === "PAF,PIF,PAF,PIF") {
-                        betHistory = []; // Reset l'historique pour ne pas boucler
+                        betHistory = []; 
                         setTimeout(() => { triggerDeltaruneEasterEgg(); }, 1500);
                     }
                 } else {
                     resultDiv.innerText += " (Pari perdu)";
-                    betHistory = []; // Casse l'historique d'affilée en cas d'erreur
+                    betHistory = []; 
                     
                     if (winStreak > 0) {
                         savedStreakBeforeLoss = winStreak;
@@ -2069,7 +2073,6 @@
                 drOverlay.appendChild(container);
             }, 1500);
         }
-        // Patch pour l'appel de fonction
         function drTriggerGameOver(id) { drTriggerTriggerGameOver(id); }
     </script>
 
