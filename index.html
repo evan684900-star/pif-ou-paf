@@ -577,7 +577,7 @@
             font-weight: bold;
             text-align: center;
             box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
-            z-index: 1001;
+            z-index: 101;
             transition: top 0.4s ease;
         }
 
@@ -865,6 +865,191 @@
             transform: translate(2px, 2px);
             box-shadow: 2px 2px 0px var(--menu-border);
         }
+
+        /* --- STYLE EASTER EGG DELTARUNE --- */
+        #drOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000000;
+            z-index: 200000;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding: 40px;
+            font-family: monospace;
+            color: #ffffff;
+            user-select: none;
+        }
+
+        .dr-battle-arena {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .dr-player-side {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dr-cursor-icon {
+            font-size: 2.5rem;
+            transform: rotate(-25deg);
+            display: inline-block;
+            animation: drHeartPulse 0.6s infinite alternate;
+        }
+
+        @keyframes drHeartPulse {
+            from { transform: rotate(-25deg) scale(1); }
+            to { transform: rotate(-25deg) scale(1.15); }
+        }
+
+        .dr-enemy-side {
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .dr-bubble {
+            position: absolute;
+            left: -190px;
+            top: -20px;
+            background-color: #ffffff;
+            color: #000000;
+            border: 3px solid #ffffff;
+            border-radius: 12px;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 16px;
+            width: 140px;
+            box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+        }
+        .dr-bubble::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 25px;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 10px solid #ffffff;
+        }
+
+        .dr-ui-box {
+            width: 100%;
+            max-width: 800px;
+            border: 4px solid #00dcff;
+            background-color: #000000;
+            margin: 0 auto;
+            padding: 18px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .dr-stats-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-bottom: 2px dashed #00dcff;
+            padding-bottom: 8px;
+        }
+
+        .dr-hp-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+        }
+
+        .dr-hp-bar-bg {
+            width: 140px;
+            height: 16px;
+            background-color: #ff0055;
+            position: relative;
+        }
+
+        .dr-hp-bar-fill {
+            width: 100%;
+            height: 100%;
+            background-color: #00dcff;
+        }
+
+        .dr-text-screen {
+            font-size: 20px;
+            min-height: 55px;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        .dr-action-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .dr-btn-action {
+            background: transparent;
+            border: 3px solid #ff8400;
+            color: #ff8400;
+            padding: 8px 16px;
+            font-size: 16px;
+            font-family: monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            text-transform: uppercase;
+        }
+        .dr-btn-action:hover, .dr-btn-action.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.04);
+        }
+        .dr-btn-action.fight-btn {
+            border-color: #ffea00;
+            color: #ffea00;
+        }
+
+        .dr-sub-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .dr-choice-btn {
+            background: #121212;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 6px 14px;
+            font-family: monospace;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .dr-choice-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .dr-center-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -881,25 +1066,22 @@
         </div>
     </div>
 
+    <!-- AUDIO ELEMENTS -->
     <audio id="bgMusic" loop>
         <source src="Enregistrement-2026-06-21-112353.mp3" type="audio/mpeg">
     </audio>
-
     <audio id="achievementSound">
         <source src="minecraft-rare-achievement.mp3" type="audio/mpeg">
     </audio>
-
     <audio id="haloSound">
         <source src="I need a weapon_2.mp3" type="audio/mpeg">
     </audio>
 
     <div class="banner-notification" id="bannerNotification">SUCCÈS DÉBLOQUÉ !</div>
-
     <div class="recovery-timer-banner" id="recoveryTimerBanner">⚠️ SÉRIE PERDUE ! RESTAUREZ-LA DANS LA BOUTIQUE : <span id="recoverySeconds">60</span>s</div>
-
     <div class="combo-overlay" id="comboOverlay">COMBO X2</div>
 
-    <button class="version-btn" onclick="toggleChangelog()">v5.1.9</button>
+    <button class="version-btn" onclick="toggleChangelog()">v6.0.0</button>
     <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Musique On/Off">🎵</button>
     <button class="mute-btn" id="sfxMuteBtn" onclick="toggleSfxMute()" title="Bruitages On/Off" style="left: 145px;">🔊</button>
 
@@ -907,8 +1089,15 @@
         <div class="changelog-header">Journal des changements</div>
         <div class="changelog-content">
             <div class="version-block">
+                <div class="version-title">v6.0.0</div>
+                <ul class="version-list">
+                    <li>ajout d'un énorme easter egg sur deltarune...</li>
+                </ul>
+            </div>
+            <div class="version-block">
                 <div class="version-title">v5.1.9</div>
                 <ul class="version-list">
+                    <li>Ajout d'un nouvel Easter Egg Deltarune légendaire ! Tente d'enchaîner Paf, Pif, Paf, Pif en gagnant pour l'activer.</li>
                     <li>Corrections de bugs et améliorations.</li>
                 </ul>
             </div>
@@ -931,56 +1120,12 @@
                 </ul>
             </div>
             <div class="version-block">
-                <div class="version-title">v5.1.5</div>
-                <ul class="version-list">
-                    <li>Corrections de bugs et améliorations.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v5.1.4</div>
-                <ul class="version-list">
-                    <li>Ajout d'un son à chaque succés obtenu</li>
-                    <li>Ajout d'un bouton (🔊) pour couper uniquement les petits bruitages.</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v5.1.3</div>
-                <ul class="version-list">
-                    <li>ajout du skin du lingot d'or de minecraft</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v5.1.2</div>
-                <ul class="version-list">
-                    <li>Nouveau skin : Triforce ajouté à la boutique !</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v5.1.1</div>
-                <ul class="version-list">
-                    <li>image de la medaille remplacée</li>
-                </ul>
-            </div>
-            <div class="version-block">
-                <div class="version-title">v5.1.0</div>
-                <ul class="version-list">
-                    <li>musique de fond ajoutée</li>
-                </ul>
-            </div>
-            <div class="version-block">
                 <div class="version-title">v5.0 - Boutique &amp; Système de Bonus</div>
                 <ul class="version-list">
                     <li>Changement du Bonus de Chance (🍀) : Dure désormais 2min et 30s après achat.</li>
-                    <li>Changement de la Récupération de Série (🔥) : Devient un consommable à acheter et utiliser directement dans la boutique pendant le compte à rebours pour restaurer instantanément la série.</li>
-                    <li>Affichage dynamique des combos et des records sous le score.</li>
+                    <li>Changement de la Récupération de Série (🔥) : Restaurer instantanément la série.</li>
                 </ul>
             </div>
-            <div class="version-block">
-                    <div class="version-title">v1.0.0-4.0.0</div>
-                    <ul class="version-list">
-                        <li>mise en place de la base du site et ajout de a peu près tout ce que vous voyez</li>
-                </ul>
-            </div>   
         </div>
     </div>
 
@@ -1065,6 +1210,7 @@
         <button class="debug-btn" onclick="debugAddPoints()">🪙 Ajouter +500 Points</button>
         <button class="debug-btn" onclick="debugUnlockSkins()">🛒 Débloquer tous les skins</button>
         <button class="debug-btn" onclick="debugUnlockAchievements()">🏆 Valider tous les succès</button>
+        <button class="debug-btn" onclick="debugTriggerDeltarune()" style="color:#00dcff; border-color:rgba(0,220,255,0.3)">👹 Lancer l'Easter Egg Deltarune</button>
         <button class="debug-btn" onclick="debugResetAll()" style="color:#ff0055; border-color:rgba(255,0,85,0.3)">⚠️ Réinitialiser toutes les données</button>
         <button class="debug-btn" onclick="closeDebug()" style="text-align:center; background:#ff0055; color:white; margin-top:10px;">Fermer la console</button>
     </div>
@@ -1127,6 +1273,62 @@
         </a>
     </div>
 
+    <!-- --- MODULE EASTER EGG DELTARUNE OVERLAY --- -->
+    <div id="drOverlay">
+        <div class="dr-battle-arena" id="drArena">
+            <!-- Left Side Player -->
+            <div class="dr-player-side">
+                <span class="dr-cursor-icon">🖱️</span>
+                <span style="font-weight: bold; font-size: 20px; color: #00dcff;">VOUS</span>
+            </div>
+
+            <!-- Enemy Bubble Dialogue -->
+            <div class="dr-bubble" id="drBubble" style="display: none;">
+                <span id="drBubbleText">non.</span>
+            </div>
+
+            <!-- Right Side Monster (Coin) -->
+            <div class="dr-enemy-side" id="drEnemySide">
+                <div class="coin" id="drCoin" data-skin="default">
+                    <div class="side heads">PIF</div>
+                    <div class="side tails">PAF</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deltarune UI Control Box -->
+        <div class="dr-ui-box" id="drUiBox">
+            <!-- Stat Line Layout -->
+            <div class="dr-stats-row">
+                <div>VOUS</div>
+                <div class="dr-hp-container">
+                    <span style="color: #ffaa00; font-weight: bold;">HP</span>
+                    <div class="dr-hp-bar-bg">
+                        <div class="dr-hp-bar-fill" id="drHpFill"></div>
+                    </div>
+                    <span>160 / 160</span>
+                </div>
+            </div>
+
+            <!-- Text Description Box Display -->
+            <div class="dr-text-screen" id="drTextScreen">
+                * La pièce bloque votre route !
+            </div>
+
+            <!-- Action Sub-items List Container -->
+            <div class="dr-sub-menu" id="drSubMenu" style="display: none;"></div>
+
+            <!-- Action Command Menu Buttons Bar -->
+            <div class="dr-action-buttons" id="drActionButtons">
+                <button class="dr-btn-action fight-btn" onclick="drOpenSubMenu('fight')">⚔️ FIGHT</button>
+                <button class="dr-btn-action" onclick="drOpenSubMenu('act')">💬 ACT</button>
+                <button class="dr-btn-action" onclick="drOpenSubMenu('item')">💼 ITEM</button>
+                <button class="dr-btn-action" onclick="drOpenSubMenu('spare')">❌ SPARE</button>
+                <button class="dr-btn-action" onclick="drOpenSubMenu('defend')">🛡️ DEFEND</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let coin = document.getElementById('coin');
         let resultDiv = document.getElementById('result');
@@ -1138,6 +1340,9 @@
         let pifStreak = 0;
         let winStreak = 0; 
         let selectedBet = null;
+
+        // Easter Egg Sequence Tracking (Gagner : PAF, PIF, PAF, PIF d'affilée)
+        let betHistory = [];
 
         let leverClicks = 0;
         let lastClickTime = 0;
@@ -1167,7 +1372,6 @@
 
         let typedInput = "";
 
-        // MODIFICATION ICI : On enregistre l'action dans le localStorage à la fermeture
         function closeSecurityModal() {
             document.getElementById('securityModal').style.display = 'none';
             localStorage.setItem('pifpaf_security_seen', 'true');
@@ -1383,8 +1587,19 @@
                     userPoints += pointsGagnes;
                     localStorage.setItem('pifpaf_points', userPoints);
                     triggerBanner(`BON PARI ! +${pointsGagnes} Points 🪙`);
+
+                    // ENREGISTREMENT ET VERIFICATION DE LA SEQUENCE SÉRIE DELTARUNE
+                    betHistory.push(rollResult);
+                    if (betHistory.length > 4) {
+                        betHistory.shift();
+                    }
+                    if (betHistory.join(',') === "PAF,PIF,PAF,PIF") {
+                        betHistory = []; // Reset l'historique pour ne pas boucler
+                        setTimeout(() => { triggerDeltaruneEasterEgg(); }, 1500);
+                    }
                 } else {
                     resultDiv.innerText += " (Pari perdu)";
+                    betHistory = []; // Casse l'historique d'affilée en cas d'erreur
                     
                     if (winStreak > 0) {
                         savedStreakBeforeLoss = winStreak;
@@ -1641,6 +1856,11 @@
             triggerBanner("DEV : Tous les succès validés ! 🏆");
         }
 
+        function debugTriggerDeltarune() {
+            closeDebug();
+            triggerDeltaruneEasterEgg();
+        }
+
         function debugResetAll() {
             localStorage.clear();
             location.reload();
@@ -1655,10 +1875,202 @@
         updateStatsDOM();
         refreshAchievementsUI();
 
-        // MODIFICATION ICI : On vérifie au lancement si la pop-up a déjà été vue
         if (localStorage.getItem('pifpaf_security_seen') === 'true') {
             document.getElementById('securityModal').style.display = 'none';
         }
+
+        // --- GESTION EN JAVASCRIPT DE L'EASTER EGG DELTARUNE ---
+        const drOverlay = document.getElementById('drOverlay');
+        const drTextScreen = document.getElementById('drTextScreen');
+        const drSubMenu = document.getElementById('drSubMenu');
+        const drActionButtons = document.getElementById('drActionButtons');
+        const drBubble = document.getElementById('drBubble');
+        const drCoin = document.getElementById('drCoin');
+
+        function triggerDeltaruneEasterEgg() {
+            // Applique le skin actuel de la pièce à celle du combat
+            drCoin.setAttribute('data-skin', currentSkin);
+            drOverlay.style.display = 'flex';
+            drResetBattleBox();
+        }
+
+        function drResetBattleBox() {
+            drBubble.style.display = 'none';
+            drSubMenu.style.display = 'none';
+            drActionButtons.style.display = 'flex';
+            drTextScreen.style.display = 'block';
+            drTextScreen.innerText = "* La pièce bloque le passage ! Choisissez une action.";
+        }
+
+        function drOpenSubMenu(category) {
+            drTextScreen.style.display = 'none';
+            drActionButtons.style.display = 'none';
+            drSubMenu.innerHTML = '';
+            drSubMenu.style.display = 'flex';
+
+            if (category === 'fight') {
+                createSubMenuBtn("Queue de fer", () => drExecuteFight('queue'));
+                createSubMenuBtn("Tranche", () => drExecuteFight('tranche'));
+                createSubMenuBtn("???", () => drExecuteFight('mystery'));
+            } else if (category === 'act') {
+                createSubMenuBtn("Raisonne le", () => drExecuteAct('raisonne'));
+                createSubMenuBtn("Le Z", () => drExecuteAct('z'));
+            } else if (category === 'item') {
+                drSubMenu.style.display = 'none';
+                drTextScreen.style.display = 'block';
+                drTextScreen.innerText = "t'es pauvre...";
+                createSubMenuBtn("Retour", () => drResetBattleBox(), drUiBox);
+                return;
+            } else if (category === 'spare') {
+                drSubMenu.style.display = 'none';
+                drTextScreen.style.display = 'block';
+                drTextScreen.innerText = "trop simple cherche autre chose";
+                createSubMenuBtn("Retour", () => drResetBattleBox(), drUiBox);
+                return;
+            } else if (category === 'defend') {
+                drSubMenu.style.display = 'none';
+                drTextScreen.style.display = 'block';
+                drTextScreen.innerText = "Pas le temps de se défendre !";
+                createSubMenuBtn("Retour", () => drResetBattleBox(), drUiBox);
+                return;
+            }
+
+            // Bouton retour générique pour FIGHT et ACT
+            let backBtn = document.createElement('button');
+            backBtn.className = 'dr-choice-btn';
+            backBtn.style.borderColor = '#ff0055';
+            backBtn.innerText = "🔙 Retour";
+            backBtn.onclick = drResetBattleBox;
+            drSubMenu.appendChild(backBtn);
+        }
+
+        function createSubMenuBtn(text, callback, alternativeParent = null) {
+            let btn = document.createElement('button');
+            btn.className = 'dr-choice-btn';
+            btn.innerText = text;
+            btn.onclick = callback;
+            if (alternativeParent) {
+                // Pour insérer un bouton temporaire directement sous le texte
+                btn.style.marginTop = "10px";
+                btn.style.alignSelf = "flex-start";
+                alternativeParent.appendChild(btn);
+                // On surcharge le callback pour qu'il nettoie le bouton créé
+                btn.onclick = () => {
+                    btn.remove();
+                    callback();
+                };
+            } else {
+                drSubMenu.appendChild(btn);
+            }
+        }
+
+        // --- BRANCHES DE COMBAT (FIGHT) ---
+        function drExecuteFight(type) {
+            drSubMenu.style.display = 'none';
+            drTextScreen.style.display = 'block';
+
+            if (type === 'queue') {
+                drTextScreen.innerText = "l'attaque ne lui a fait aucun degat... au contraire il a aimé !!?";
+                setTimeout(() => {
+                    drOverlay.style.display = 'none';
+                }, 3000);
+            } else if (type === 'tranche') {
+                drTextScreen.innerText = "gratuit comme ça 0 pitié ?";
+                setTimeout(() => {
+                    drOverlay.style.display = 'none';
+                }, 3000);
+            } else if (type === 'mystery') {
+                drTextScreen.innerText = "bah y'avais marqué ??? tu t'attendais a quoi ?";
+                setTimeout(() => {
+                    drOverlay.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // --- BRANCHES D'ACTIONS (ACT) ---
+        function drExecuteAct(type) {
+            drSubMenu.style.display = 'none';
+
+            if (type === 'raisonne') {
+                drBubble.style.display = 'block';
+                drUiBox.style.display = 'none';
+                
+                // Crée la boite de choix temporaire sur l'arène
+                let arenaChoices = document.createElement('div');
+                arenaChoices.style.position = 'absolute';
+                arenaChoices.style.bottom = '20px';
+                arenaChoices.style.left = '50%';
+                arenaChoices.style.transform = 'translateX(-50%)';
+                arenaChoices.style.display = 'flex';
+                arenaChoices.style.gap = '20px';
+                arenaChoices.id = "drArenaChoices";
+
+                let c1 = document.createElement('button');
+                c1.className = 'dr-choice-btn';
+                c1.innerText = "1- gratuit comme ça ?";
+                c1.onclick = () => drTriggerGameOver(1);
+
+                let c2 = document.createElement('button');
+                c2.className = 'dr-choice-btn';
+                c2.innerText = "2- ah ok.";
+                c2.onclick = () => drTriggerGameOver(2);
+
+                arenaChoices.appendChild(c1);
+                arenaChoices.appendChild(c2);
+                document.getElementById('drArena').appendChild(arenaChoices);
+
+            } else if (type === 'z') {
+                // Disparition de la pièce dans une lumière blanche
+                document.getElementById('drEnemySide').style.opacity = '0';
+                setTimeout(() => {
+                    drOverlay.style.backgroundColor = '#ffffff';
+                    drOverlay.innerHTML = `
+                        <div class="dr-center-screen">
+                            <h1 style="color: #00d2ff; font-size: 5rem; font-family: sans-serif; font-weight: 900; margin: 0;">BRAVO</h1>
+                            <p style="color: #000000; font-size: 1.5rem; font-weight: bold; margin-top: 15px;">c'etait la SEULE bonne fin possible (oui, oui).</p>
+                        </div>
+                    `;
+                }, 500);
+            }
+        }
+
+        // --- GESTION DES TEXTES DE FIN DE JEU (GAME OVER) ---
+        function drTriggerTriggerGameOver(id) {
+            document.getElementById('drArenaChoices').remove();
+            drBubble.innerText = "oui";
+            
+            setTimeout(() => {
+                drOverlay.innerHTML = '';
+                drOverlay.style.backgroundColor = '#000000';
+                drOverlay.style.justifyContent = 'center';
+                
+                let container = document.createElement('div');
+                container.className = 'dr-center-screen';
+                
+                let goTitle = document.createElement('h1');
+                goTitle.style.color = '#ff0000';
+                goTitle.style.fontSize = '4.5rem';
+                goTitle.style.margin = '0';
+                goTitle.innerText = "GAME OVER";
+                
+                let goSub = document.createElement('p');
+                goSub.style.color = '#ffffff';
+                goSub.style.fontSize = '1.2rem';
+                goSub.style.marginTop = '20px';
+                
+                if (id === 1) {
+                    goSub.innerText = "maintant refais toute la manip pour réessayer 👍";
+                } else {
+                    goSub.innerText = "pour ceux qui ont fait le 1 force a vous.";
+                }
+                
+                container.appendChild(goTitle);
+                container.appendChild(goSub);
+                drOverlay.appendChild(container);
+            }, 1500);
+        }
+        // Patch pour l'appel de fonction
+        function drTriggerGameOver(id) { drTriggerTriggerGameOver(id); }
     </script>
 
     <script defer src="/_vercel/insights/script.js"></script>
