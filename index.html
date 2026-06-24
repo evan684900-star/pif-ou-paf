@@ -1054,6 +1054,163 @@
             text-align: center;
             width: 100%;
         }
+
+        /* =============================================
+           RESPONSIVE MOBILE (max-width: 600px)
+           PC = styles au-dessus, téléphone = ci-dessous
+           ============================================= */
+        @media (max-width: 600px) {
+
+            /* Permet le scroll sur mobile au lieu de couper le contenu */
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+                justify-content: flex-start;
+                padding-top: 80px;
+                padding-bottom: 80px;
+                box-sizing: border-box;
+            }
+
+            /* Zone de jeu : supprime le décalage fixe */
+            .main-game-area {
+                transform: none;
+                padding: 0 16px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* Titre plus petit */
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            /* Pièce légèrement plus petite */
+            .coin-container {
+                width: 110px;
+                height: 110px;
+            }
+
+            /* Barre du haut : regroupe tous les boutons dans une barre fixe */
+            .version-btn {
+                top: 12px;
+                left: 12px;
+                font-size: 13px;
+            }
+
+            .mute-btn {
+                top: 10px;
+                left: 80px;
+                font-size: 16px;
+            }
+
+            /* 2ème bouton son (sfx) */
+            .mute-btn[style*="left: 145px"] {
+                left: 115px !important;
+            }
+
+            .medal-btn {
+                top: 8px;
+                right: 70px;
+            }
+
+            .medal-custom-img {
+                width: 42px;
+                height: 42px;
+            }
+
+            .shop-btn {
+                top: 8px;
+                right: 12px;
+                width: 42px;
+                height: 42px;
+            }
+
+            /* Panneaux menu et shop : pleine largeur en bas */
+            .menu-panel,
+            .shop-panel {
+                top: auto;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                width: 100%;
+                height: 55vh;
+                transform-origin: bottom center;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+            }
+
+            /* Changelog : pleine largeur en haut */
+            .changelog-panel {
+                top: 60px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 50vh;
+                transform-origin: top center;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+
+            /* Levier dark mode : repositionné pour ne pas gêner */
+            .lever-wrapper {
+                bottom: 16px;
+                right: 16px;
+            }
+
+            .lever-base {
+                width: 44px;
+                height: 44px;
+            }
+
+            /* Lien YouTube : repositionné */
+            .youtube-container {
+                bottom: 16px;
+                left: 16px;
+            }
+
+            .youtube-link svg {
+                width: 42px;
+                height: 42px;
+            }
+
+            /* Bannières : adaptées à la largeur */
+            .banner-notification,
+            .recovery-timer-banner {
+                width: 90%;
+                white-space: normal;
+                text-align: center;
+                font-size: 12px;
+                padding: 10px 16px;
+                box-sizing: border-box;
+            }
+
+            /* Easter egg Deltarune : padding réduit */
+            #drOverlay {
+                padding: 16px;
+            }
+
+            .dr-stats-row {
+                font-size: 16px;
+            }
+
+            .dr-text-screen {
+                font-size: 15px;
+            }
+
+            .dr-btn-action {
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+
+            .dr-action-buttons {
+                flex-wrap: wrap;
+                gap: 6px;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
